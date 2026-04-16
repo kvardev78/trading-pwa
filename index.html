@@ -1,36 +1,24 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
     <title>Trading PWA</title>
-
-    <!-- Стилове -->
-    <link rel="stylesheet" href="styles.css" />
-
-    <!-- PWA manifest -->
-    <link rel="manifest" href="manifest.json" />
-
-    <!-- Тема за мобилни устройства -->
-    <meta name="theme-color" content="#0d1117" />
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#004117">
 </head>
-
 <body>
-    <header>
-        <h1>Trading PWA</h1>
-        <p>ETH анализ, сигнали и бърз трейдинг</p>
-    </header>
-
     <main>
-        <section>
-            <h2>Статус</h2>
-            <p id="status">Зареждане...</p>
-        </section>
+        <h1>Trading PWA</h1>
+        <h2>ETH анализ, сигнали и бърз трейдинг</h2>
 
-        <button id="refresh">Обнови</button>
+        <section id="refresh">
+            <h3>Статус</h3>
+            <p id="status">Зареждане...</p>
+            <button id="refreshButton">Обнови</button>
+        </section>
     </main>
 
-    <!-- ВАЖНО: това зарежда JavaScript -->
     <script src="app.js"></script>
 </body>
 </html>
