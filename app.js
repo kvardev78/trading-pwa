@@ -1,4 +1,4 @@
-const statusText = document.querySelector('#refresh p');
+const statusText = document.getElementById('status');
 const refreshButton = document.getElementById('refreshButton');
 
 function updateStatus() {
