@@ -1,17 +1,14 @@
-// Основна логика на Trading PWA
-
-const statusBox = document.getElementById('status');
-const refreshBtn = document.getElementById('refresh');
+const statusText = document.querySelector('#refresh p');
+const refreshButton = document.getElementById('refreshButton');
 
 function updateStatus() {
-    statusBox.textContent = 'Обновяване...';
+    statusText.textContent = 'Обновяване...';
     setTimeout(() => {
-        statusBox.textContent = 'Обновено';
+        statusText.textContent = 'Обновено';
     }, 800);
 }
 
-// Обновяване при натискане
-refreshBtn.addEventListener('click', updateStatus);
+refreshButton.addEventListener('click', updateStatus);
 
-// Първоначално обновяване
+// първоначално състояние
 updateStatus();
