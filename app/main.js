@@ -40,7 +40,6 @@ function switchTab(targetId) {
     const tabs = document.querySelectorAll('.tab');
     const buttons = document.querySelectorAll('.nav-btn');
 
-    // Save active tab
     localStorage.setItem("activeTab", targetId);
 
     tabs.forEach(tab => {
@@ -69,16 +68,82 @@ window.addEventListener('load', () => {
         });
     });
 
-    // If no saved tab → default to chart
     if (!lastTab) {
         switchTab('tab-chart');
     }
 
-    // Set dropdown to saved symbol
     const savedSymbol = localStorage.getItem("symbol") || "ETHUSDT";
     const select = document.getElementById("symbol-select");
     if (select) select.value = savedSymbol;
 });
+
+// ---------------------------
+// REAL ORDERFLOW (Delta + CVD)
+// ---------------------------
+async function loadOrderflow(symbol) {
+    try {
+        const res = await fetch(`https://api.bybit.com/v5/market/recent-trade?category=linear&symbol=${symbol}&limit=1000`);
+        const json = await res.json();
+
+        if (!json.result || !json.result.list) return;
+
+        let buyVol = 0;
+        let sellVol = 0;
+
+        json.result.list.forEach(t => {
+            const qty = Number(t.qty);
+            if (t.side === "Buy") buyVol += qty;
+            else sellVol += qty;
+        });
+
+        const delta = buyVol - sellVol;
+
+        const cvdKey = `cvd_${symbol}`;
+        const prevCvd = Number(localStorage.getItem(cvdKey)) || 0;
+        const newCvd = prevCvd + delta;
+        localStorage.setItem(cvdKey, newCvd);
+
+        document.getElementById("flow-delta").innerText = `Delta: ${delta.toFixed(2)}`;
+        document.getElementById("flow-cvd").innerText = `CVD: ${newCvd.toFixed(2)}`;
+
+        updateCvdChart(newCvd);
+
+    } catch (err) {
+        console.log("Orderflow error:", err);
+    }
+}
+
+// ---------------------------
+// MINI CVD CHART
+// ---------------------------
+let cvdHistory = [];
+
+function updateCvdChart(value) {
+    const canvas = document.getElementById("cvd-chart");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    cvdHistory.push(value);
+    if (cvdHistory.length > 100) cvdHistory.shift();
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "#00ff99";
+    ctx.lineWidth = 2;
+
+    cvdHistory.forEach((v, i) => {
+        const x = (i / 100) * canvas.width;
+        const y = canvas.height - ((v - Math.min(...cvdHistory)) /
+            (Math.max(...cvdHistory) - Math.min(...cvdHistory) || 1)) * canvas.height;
+
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    });
+
+    ctx.stroke();
+}
 
 // ---------------------------
 // FLOW DATA (Bybit Public API)
@@ -116,16 +181,17 @@ async function loadFlowData() {
     if (priceChange > 0 && fundingRate > 0) bias = "Long bias / агресивни купувачи";
     if (priceChange < 0 && fundingRate < 0) bias = "Short bias / агресивни продавачи";
 
-    document.getElementById("flow-summary").innerText =
-      `Bias: ${bias}`;
+    document.getElementById("flow-summary").innerText = `Bias: ${bias}`;
 
-    // Buy/Sell Pressure Bars
     const buyPressure = Math.max(0, priceChange * 100);
     const sellPressure = Math.max(0, -priceChange * 100);
     const total = buyPressure + sellPressure || 1;
 
     document.querySelector(".buy-bar").style.width = `${(buyPressure / total) * 100}%`;
     document.querySelector(".sell-bar").style.width = `${(sellPressure / total) * 100}%`;
+
+    // REAL ORDERFLOW
+    loadOrderflow(symbol);
 
   } catch (err) {
     console.log("Flow error:", err);
