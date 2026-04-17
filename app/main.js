@@ -7,6 +7,7 @@ if (lastTab) {
     const saved = document.getElementById(lastTab);
     if (saved) saved.classList.add("active");
 }
+
 // Activate correct nav button on load
 if (lastTab) {
     document.querySelectorAll(".nav-btn").forEach(btn => {
@@ -18,7 +19,12 @@ if (lastTab) {
 // TradingView Chart
 // ---------------------------
 function initTradingView() {
-    const tv = new TradingView.widget({
+    const symbol = localStorage.getItem("symbol") || "ETHUSDT";
+
+    new TradingView.widget({
+        "symbol": `BINANCE:${symbol}`,
+        "interval": "15",
+        "timezone": "Etc/UTC",
         "theme": "dark",
         "style": "1",
         "locale": "bg",
@@ -67,6 +73,11 @@ window.addEventListener('load', () => {
     if (!lastTab) {
         switchTab('tab-chart');
     }
+
+    // Set dropdown to saved symbol
+    const savedSymbol = localStorage.getItem("symbol") || "ETHUSDT";
+    const select = document.getElementById("symbol-select");
+    if (select) select.value = savedSymbol;
 });
 
 // ---------------------------
@@ -74,7 +85,9 @@ window.addEventListener('load', () => {
 // ---------------------------
 async function loadFlowData() {
   try {
-    const res = await fetch("https://api.bybit.com/v5/market/tickers?category=linear&symbol=ETHUSDT");
+    const symbol = localStorage.getItem("symbol") || "ETHUSDT";
+
+    const res = await fetch(`https://api.bybit.com/v5/market/tickers?category=linear&symbol=${symbol}`);
     const json = await res.json();
 
     if (json.retCode !== 0 || !json.result || !json.result.list || !json.result.list.length) {
@@ -105,6 +118,15 @@ async function loadFlowData() {
 
     document.getElementById("flow-summary").innerText =
       `Bias: ${bias}`;
+
+    // Buy/Sell Pressure Bars
+    const buyPressure = Math.max(0, priceChange * 100);
+    const sellPressure = Math.max(0, -priceChange * 100);
+    const total = buyPressure + sellPressure || 1;
+
+    document.querySelector(".buy-bar").style.width = `${(buyPressure / total) * 100}%`;
+    document.querySelector(".sell-bar").style.width = `${(sellPressure / total) * 100}%`;
+
   } catch (err) {
     console.log("Flow error:", err);
   }
@@ -113,3 +135,16 @@ async function loadFlowData() {
 window.addEventListener("load", () => {
   loadFlowData();
 });
+
+// ---------------------------
+// Symbol Dropdown Listener
+// ---------------------------
+const symbolSelect = document.getElementById("symbol-select");
+if (symbolSelect) {
+    symbolSelect.addEventListener("change", (e) => {
+        const newSymbol = e.target.value;
+        localStorage.setItem("symbol", newSymbol);
+        loadFlowData();
+        initTradingView();
+    });
+}
