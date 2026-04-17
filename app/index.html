@@ -23,11 +23,11 @@
                 <div id="chart-container"></div>
             </section>
 
-            <!-- TAB: FLOW -->
-            <section id="tab-flow" class="tab">
-             <h2>Money Flow & Liquidity (ETHUSDT)</h2>
+           <!-- TAB: FLOW -->
+<section id="tab-flow" class="tab">
 
-<div class="flow-grid">
+  <h2>Money Flow & Liquidity</h2>
+
   <div class="flow-box">
     <h3>Обем и посока</h3>
     <div id="flow-volume"></div>
@@ -49,25 +49,24 @@
   </div>
 
   <div class="flow-box">
-  <h3>Delta / CVD</h3>
-  <div id="flow-delta"></div>
-  <div id="flow-cvd"></div>
+    <h3>Delta / CVD</h3>
+    <div id="flow-delta"></div>
+    <div id="flow-cvd"></div>
+    <canvas id="cvd-chart" width="300" height="80"></canvas>
   </div>
-  <canvas id="cvd-chart" width="300" height="80"></canvas>
-            </section>
 
-            <!-- TAB: AI -->
-            <section id="tab-ai" class="tab">
-                <h2>AI Анализ</h2>
-                <p>Тук ще има AI сценарии, bias, входове/изходи, риск и вероятности.</p>
-            </section>
+  <div class="flow-box">
+    <h3>Ликвидации</h3>
+    <div id="flow-liquidations"></div>
+  </div>
 
-            <!-- TAB: JOURNAL -->
-            <section id="tab-journal" class="tab">
-                <h2>Journal & Risk</h2>
-                <p>Тук ще има дневник, чеклист, риск мениджмънт и статистика.</p>
-            </section>
-        </main>
+  <div class="flow-box">
+    <h3>Orderbook Heatmap</h3>
+    <div id="flow-heatmap"></div>
+  </div>
+
+</section>
+
 
         <nav class="bottom-nav">
             <button class="nav-btn active" data-target="tab-chart">Chart</button>
