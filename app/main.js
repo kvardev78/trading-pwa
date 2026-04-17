@@ -1,16 +1,18 @@
-let tvWidgetInitialized = false;
+// ---------------------------
+// Restore last active tab
+// ---------------------------
+const lastTab = localStorage.getItem("activeTab");
+if (lastTab) {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    const saved = document.getElementById(lastTab);
+    if (saved) saved.classList.add("active");
+}
 
+// ---------------------------
+// TradingView Chart
+// ---------------------------
 function initTradingView() {
-    if (tvWidgetInitialized || typeof TradingView === 'undefined') return;
-
-    tvWidgetInitialized = true;
-
-    new TradingView.widget({
-        "width": "100%",
-        "height": window.innerHeight - 100,
-        "symbol": "BINANCE:ETHUSDT",
-        "interval": "15",
-        "timezone": "Etc/UTC",
+    const tv = new TradingView.widget({
         "theme": "dark",
         "style": "1",
         "locale": "bg",
@@ -19,9 +21,15 @@ function initTradingView() {
     });
 }
 
+// ---------------------------
+// Switch Tabs
+// ---------------------------
 function switchTab(targetId) {
     const tabs = document.querySelectorAll('.tab');
     const buttons = document.querySelectorAll('.nav-btn');
+
+    // Save active tab
+    localStorage.setItem("activeTab", targetId);
 
     tabs.forEach(tab => {
         tab.classList.toggle('active', tab.id === targetId);
@@ -36,6 +44,9 @@ function switchTab(targetId) {
     }
 }
 
+// ---------------------------
+// Navigation Buttons
+// ---------------------------
 window.addEventListener('load', () => {
     const buttons = document.querySelectorAll('.nav-btn');
 
@@ -46,8 +57,15 @@ window.addEventListener('load', () => {
         });
     });
 
-    switchTab('tab-chart');
+    // If no saved tab → default to chart
+    if (!lastTab) {
+        switchTab('tab-chart');
+    }
 });
+
+// ---------------------------
+// FLOW DATA (Bybit Public API)
+// ---------------------------
 async function loadFlowData() {
   try {
     const res = await fetch("https://api.bybit.com/v5/market/tickers?category=linear&symbol=ETHUSDT");
