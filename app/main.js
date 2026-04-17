@@ -7,6 +7,12 @@ if (lastTab) {
     const saved = document.getElementById(lastTab);
     if (saved) saved.classList.add("active");
 }
+// Activate correct nav button on load
+if (lastTab) {
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === lastTab);
+    });
+}
 
 // ---------------------------
 // TradingView Chart
