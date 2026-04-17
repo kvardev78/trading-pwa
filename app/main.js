@@ -114,6 +114,44 @@ async function loadOrderflow(symbol) {
 }
 
 // ---------------------------
+// LIQUIDATIONS (Bybit)
+// ---------------------------
+async function loadLiquidations(symbol) {
+    try {
+        const res = await fetch(`https://api.bybit.com/v5/market/liquidation?category=linear&symbol=${symbol}&limit=20`);
+        const json = await res.json();
+
+        if (!json.result || !json.result.list) return;
+
+        const list = json.result.list.slice(0, 10);
+
+        const box = document.getElementById("flow-liquidations");
+        if (!box) return;
+
+        box.innerHTML = "";
+
+        list.forEach(liq => {
+            const side = liq.side === "Buy" ? "LONG" : "SHORT";
+            const color = liq.side === "Buy" ? "#00ff99" : "#ff4444";
+
+            const price = Number(liq.price).toFixed(2);
+            const qty = Number(liq.qty).toLocaleString();
+
+            const row = document.createElement("div");
+            row.style.marginBottom = "4px";
+            row.style.color = color;
+            row.style.fontSize = "14px";
+
+            row.innerText = `${side} • ${qty} • @ ${price}`;
+            box.appendChild(row);
+        });
+
+    } catch (err) {
+        console.log("Liquidations error:", err);
+    }
+}
+
+// ---------------------------
 // MINI CVD CHART
 // ---------------------------
 let cvdHistory = [];
@@ -192,6 +230,9 @@ async function loadFlowData() {
 
     // REAL ORDERFLOW
     loadOrderflow(symbol);
+
+    // LIQUIDATIONS
+    loadLiquidations(symbol);
 
   } catch (err) {
     console.log("Flow error:", err);
