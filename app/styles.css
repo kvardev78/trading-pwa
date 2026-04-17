@@ -1,14 +1,12 @@
-* {
-    box-sizing: border-box;
+/* ---------------------------
+   GLOBAL
+----------------------------*/
+body {
     margin: 0;
     padding: 0;
-}
-
-html, body {
-    height: 100%;
-    background-color: #05060a;
-    color: #f5f5f5;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
 }
 
 #app {
@@ -17,29 +15,34 @@ html, body {
     height: 100vh;
 }
 
+/* ---------------------------
+   HEADER
+----------------------------*/
 .app-header {
-    padding: 8px 12px;
-    background: #0b0d12;
-    border-bottom: 1px solid #222;
+    padding: 10px;
+    background: #111;
     text-align: center;
+    border-bottom: 1px solid #222;
 }
 
 .app-header h1 {
-    font-size: 16px;
-    font-weight: 600;
+    margin: 0;
+    font-size: 20px;
 }
 
+/* ---------------------------
+   MAIN AREA
+----------------------------*/
 .app-main {
     flex: 1;
-    position: relative;
-    overflow: hidden;
+    overflow-y: auto;
+    padding: 10px;
 }
 
+/* ---------------------------
+   TABS
+----------------------------*/
 .tab {
-    position: absolute;
-    inset: 0;
-    padding: 8px 8px 0 8px;
-    overflow-y: auto;
     display: none;
 }
 
@@ -47,51 +50,93 @@ html, body {
     display: block;
 }
 
-#chart-container {
-    width: 100%;
-    height: calc(100vh - 100px); /* екран минус header + nav */
+/* ---------------------------
+   FLOW BOXES
+----------------------------*/
+.flow-box {
+    background: #111;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid #222;
 }
 
-/* Долно меню */
+.flow-box h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #00eaff;
+}
+
+/* ---------------------------
+   CVD CHART
+----------------------------*/
+#cvd-chart {
+    width: 100%;
+    height: 80px;
+    background: #000;
+    border: 1px solid #222;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+/* ---------------------------
+   LIQUIDATIONS
+----------------------------*/
+#flow-liquidations div {
+    padding: 4px 0;
+    font-size: 14px;
+}
+
+/* ---------------------------
+   HEATMAP
+----------------------------*/
+#flow-heatmap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 10px;
+}
+
+.heatmap-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #fff;
+}
+
+/* ---------------------------
+   NAVIGATION
+----------------------------*/
 .bottom-nav {
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    padding: 6px 4px;
-    background: #0b0d12;
+    background: #111;
+    padding: 10px 0;
     border-top: 1px solid #222;
 }
 
 .nav-btn {
-    flex: 1;
-    margin: 0 4px;
-    padding: 8px 4px;
-    background: #141720;
-    color: #ccc;
+    background: #222;
+    color: #fff;
     border: none;
+    padding: 8px 14px;
     border-radius: 6px;
-    font-size: 12px;
-    font-weight: 500;
+    font-size: 14px;
 }
 
 .nav-btn.active {
-    background: #2563eb;
-    color: #fff;
-}
-.flow-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+    background: #00aaff;
+    color: #000;
 }
 
-.flow-box {
-  background: #0b0f16;
-  border-radius: 8px;
-  padding: 10px;
-  border: 1px solid #1c2433;
-}
-
-.flow-box h3 {
-  margin-top: 0;
-  font-size: 14px;
+/* ---------------------------
+   CHART CONTAINER
+----------------------------*/
+#chart-container {
+    width: 100%;
+    height: 500px;
+    background: #000;
 }
