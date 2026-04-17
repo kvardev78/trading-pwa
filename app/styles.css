@@ -78,3 +78,20 @@ html, body {
     background: #2563eb;
     color: #fff;
 }
+.flow-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.flow-box {
+  background: #0b0f16;
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid #1c2433;
+}
+
+.flow-box h3 {
+  margin-top: 0;
+  font-size: 14px;
+}
