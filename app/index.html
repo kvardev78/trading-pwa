@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trading App</title>
 
-    <!-- TradingView -->
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-
+    <script src="https://s3.tradingview.com/tv.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -60,39 +59,3 @@
             <div class="flow-box">
                 <h3>Ликвидации</h3>
                 <div id="flow-liquidations"></div>
-            </div>
-
-            <div class="flow-box">
-                <h3>Orderbook Heatmap</h3>
-                <div id="flow-heatmap"></div>
-            </div>
-
-        </section>
-
-        <!-- TAB: AI -->
-        <section id="tab-ai" class="tab">
-            <h2>AI Анализ</h2>
-            <p>Тук ще има AI сценарии, bias, входове/изходи, риск и вероятности.</p>
-        </section>
-
-        <!-- TAB: JOURNAL -->
-        <section id="tab-journal" class="tab">
-            <h2>Journal & Risk</h2>
-            <p>Тук ще има дневник, чеклист, риск мениджмънт и статистика.</p>
-        </section>
-
-    </main>
-
-    <!-- Navigation -->
-    <nav class="bottom-nav">
-        <button class="nav-btn active" data-target="tab-chart">Chart</button>
-        <button class="nav-btn" data-target="tab-flow">Flow</button>
-        <button class="nav-btn" data-target="tab-ai">AI</button>
-        <button class="nav-btn" data-target="tab-journal">Journal</button>
-    </nav>
-
-</div>
-
-<script src="main.js"></script>
-</body>
-</html>
