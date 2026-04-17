@@ -47,7 +47,7 @@
     <h3>Резюме</h3>
     <div id="flow-summary"></div>
   </div>
-  
+
   <div class="flow-box">
   <h3>Delta / CVD</h3>
   <div id="flow-delta"></div>
@@ -79,6 +79,40 @@
         <script src="main.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
+            async function loadOrderflow(symbol) {
+  try {
+    const res = await fetch(`https://api.bybit.com/v5/market/recent-trade?category=linear&symbol=${symbol}&limit=1000`);
+    const json = await res.json();
+
+    if (!json.result || !json.result.list) return;
+
+    let buyVol = 0;
+    let sellVol = 0;
+
+    json.result.list.forEach(t => {
+      const qty = Number(t.qty);
+      if (t.side === "Buy") buyVol += qty;
+      else sellVol += qty;
+    });
+
+    const delta = buyVol - sellVol;
+
+    // CVD per symbol
+    const cvdKey = `cvd_${symbol}`;
+    const prevCvd = Number(localStorage.getItem(cvdKey)) || 0;
+    const newCvd = prevCvd + delta;
+    localStorage.setItem(cvdKey, newCvd);
+
+    document.getElementById("flow-delta").innerText =
+      `Delta (real): ${delta.toFixed(2)}`;
+
+    document.getElementById("flow-cvd").innerText =
+      `CVD: ${newCvd.toFixed(2)}`;
+
+  } catch (err) {
+    console.log("Orderflow error:", err);
+  }
+}
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
                     .catch(err => {
