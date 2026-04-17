@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Trading App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- TradingView скрипт -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header class="app-header">
+            <h1>Trading App</h1>
+        </header>
+
+        <main class="app-main">
+            <!-- TAB: CHART -->
+            <section id="tab-chart" class="tab active">
+                <div id="chart-container"></div>
+            </section>
+
+            <!-- TAB: FLOW -->
+            <section id="tab-flow" class="tab">
+                <h2>Money Flow / Liquidity</h2>
+                <p>Тук ще вкараме Money Flow Profile, обемни зони, delta, CVD и др.</p>
+            </section>
+
+            <!-- TAB: AI -->
+            <section id="tab-ai" class="tab">
+                <h2>AI Анализ</h2>
+                <p>Тук ще има AI сценарии, bias, входове/изходи, риск и вероятности.</p>
+            </section>
+
+            <!-- TAB: JOURNAL -->
+            <section id="tab-journal" class="tab">
+                <h2>Journal & Risk</h2>
+                <p>Тук ще има дневник, чеклист, риск мениджмънт и статистика.</p>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-target="tab-chart">Chart</button>
+            <button class="nav-btn" data-target="tab-flow">Flow</button>
+            <button class="nav-btn" data-target="tab-ai">AI</button>
+            <button class="nav-btn" data-target="tab-journal">Journal</button>
+        </nav>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
