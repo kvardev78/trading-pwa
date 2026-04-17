@@ -184,6 +184,51 @@ function updateCvdChart(value) {
 }
 
 // ---------------------------
+// ORDERBOOK HEATMAP
+// ---------------------------
+async function loadHeatmap(symbol) {
+    try {
+        const res = await fetch(`https://api.bybit.com/v5/market/orderbook?category=linear&symbol=${symbol}&limit=25`);
+        const json = await res.json();
+
+        if (!json.result || !json.result.b) return;
+
+        const bids = json.result.b.slice(0, 10);
+        const asks = json.result.a.slice(0, 10);
+
+        const box = document.getElementById("flow-heatmap");
+        if (!box) return;
+
+        box.innerHTML = "";
+
+        function createRow(price, size, isBid) {
+            const row = document.createElement("div");
+            row.className = "heatmap-row";
+
+            const intensity = Math.min(size / 500000, 1);
+            const color = isBid
+                ? `rgba(0, 255, 150, ${intensity})`
+                : `rgba(255, 80, 80, ${intensity})`;
+
+            row.style.background = color;
+
+            row.innerHTML = `
+                <span>${price}</span>
+                <span>${Number(size).toLocaleString()}</span>
+            `;
+
+            return row;
+        }
+
+        asks.forEach(a => box.appendChild(createRow(a[0], a[1], false)));
+        bids.forEach(b => box.appendChild(createRow(b[0], b[1], true)));
+
+    } catch (err) {
+        console.log("Heatmap error:", err);
+    }
+}
+
+// ---------------------------
 // FLOW DATA (Bybit Public API)
 // ---------------------------
 async function loadFlowData() {
@@ -225,14 +270,12 @@ async function loadFlowData() {
     const sellPressure = Math.max(0, -priceChange * 100);
     const total = buyPressure + sellPressure || 1;
 
-    document.querySelector(".buy-bar").style.width = `${(buyPressure / total) * 100}%`;
-    document.querySelector(".sell-bar").style.width = `${(sellPressure / total) * 100}%`;
+    document.querySelector(".buy-bar")?.style && (document.querySelector(".buy-bar").style.width = `${(buyPressure / total) * 100}%`);
+    document.querySelector(".sell-bar")?.style && (document.querySelector(".sell-bar").style.width = `${(sellPressure / total) * 100}%`);
 
-    // REAL ORDERFLOW
     loadOrderflow(symbol);
-
-    // LIQUIDATIONS
     loadLiquidations(symbol);
+    loadHeatmap(symbol);
 
   } catch (err) {
     console.log("Flow error:", err);
