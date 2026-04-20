@@ -1,87 +1,93 @@
 import flet as ft
 import asyncio
-import httpx # По-бърза алтернатива на requests за асинхронна работа
 
 async def main(page: ft.Page):
-    page.title = "Vardev ETH Flow Monitor"
-    page.theme_mode = ft.ThemeMode.DARK
-    page.padding = 10
+    # Настройки от твоя Manifest & CSS
+    page.title = "Trading App - ETH"
     page.bgcolor = "#000000"
-    
-    # 1. Елементи за Flow Данните (аналог на твоите <span> в HTML)
-    flow_volume = ft.Text("—", size=16, color="#00ff99", weight="bold")
-    flow_oi = ft.Text("—", size=16, color="#00ff99", weight="bold")
-    flow_funding = ft.Text("—", size=16, color="#00ff99", weight="bold")
-    flow_cvd = ft.Text("—", size=16, color="#00ff99", weight="bold")
+    page.theme_mode = ft.ThemeMode.DARK
+    page.padding = 0
+    page.spacing = 0
 
-    # 2. Функция за взимане на данни (аналог на fetchFlow)
-    async def fetch_flow_data():
-        while True:
-            try:
-                async with httpx.AsyncClient() as client:
-                    # Използвам твоя линк от Coinalyze
-                    response = await client.get("https://api.coinalyze.net/v1/eth/flow")
-                    if response.status_code == 200:
-                        data = response.json()
-                        flow_volume.value = str(data.get("volume", "—"))
-                        flow_oi.value = str(data.get("oi", "—"))
-                        flow_funding.value = str(data.get("funding", "—"))
-                        flow_cvd.value = str(data.get("cvd", "—"))
-                        page.update()
-            except Exception as e:
-                print(f"API Error: {e}")
-            await asyncio.sleep(5) # Обновява на всеки 5 секунди
-
-    # 3. Трейдинг Вю Графика (Интегрирана чрез WebView)
-    # Забележка: В мобилното приложение това зарежда директно джаджата
-    chart_widget = ft.HtmlElement(
-        srcdoc="""
-        <div id="tv_chart" style="height:400px;"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-        <script>
-            new TradingView.widget({
-                "autosize": true, "symbol": "BINANCE:ETHUSDT", "interval": "15",
-                "theme": "dark", "style": "1", "locale": "bg", "container_id": "tv_chart"
-            });
-        </script>
-        """
+    # 1. СЕКЦИЯ: CHART (TradingView)
+    chart_view = ft.Container(
+        content=ft.HtmlElement(
+            srcdoc="""
+            <div id="tv_chart" style="height:100vh;"></div>
+            <script src="https://s3.tradingview.com/tv.js"></script>
+            <script>
+                new TradingView.widget({
+                    "autosize": true, "symbol": "BYBIT:ETHUSDT.P", "interval": "15",
+                    "theme": "dark", "style": "1", "locale": "bg", "container_id": "tv_chart",
+                    "hide_side_toolbar": false, "allow_symbol_change": true, "details": true
+                });
+            </script>
+            """
+        ),
+        expand=True,
+        visible=True
     )
 
-    # 4. Изграждане на интерфейса (Layout)
-    page.add(
-        ft.Column([
-            ft.Text("ETH/USDT REAL-TIME FLOW", size=22, weight="bold", color="white"),
-            ft.Divider(color="white10"),
-            
-            # Секция с метрики (Card стил)
-            ft.Container(
-                content=ft.Row([
-                    ft.Column([ft.Text("Volume"), flow_volume]),
-                    ft.Column([ft.Text("Open Interest"), flow_oi]),
-                    ft.Column([ft.Text("Funding"), flow_funding]),
-                    ft.Column([ft.Text("CVD"), flow_cvd]),
-                ], alignment=ft.MainAxisAlignment.SPACE_AROUND),
-                padding=15,
-                border_radius=10,
-                bgcolor="#111111"
-            ),
-            
-            ft.Text("TradingView Live Chart", size=18, weight="bold"),
-            ft.Container(content=chart_widget, height=400, border_radius=10),
-            
-            # Долна навигация (аналог на твоите nav-buttons)
-            ft.Tabs(
-                selected_index=0,
-                tabs=[
-                    ft.Tab(text="Monitor", icon=ft.icons.SCREEN_SEARCH_DESKTOP_OUTLINED),
-                    ft.Tab(text="Analysis", icon=ft.icons.ANALYTICS_OUTLINED),
-                    ft.Tab(text="Settings", icon=ft.icons.SETTINGS),
-                ],
-            )
-        ], scroll=ft.ScrollMode.ADAPTIVE)
+    # 2. СЕКЦИЯ: FLOW (Твоите Flow Boxes от Index.html)
+    def create_box(label, value="Броене...", color="#ffffff"):
+        return ft.Container(
+            content=ft.Column([
+                ft.Text(label, size=12, color="#aaaaaa"),
+                ft.Text(value, size=18, color=color, weight="bold")
+            ], spacing=2),
+            padding=12, bgcolor="#111111", border=ft.border.all(1, "#222222"),
+            border_radius=6, expand=1
+        )
+
+    flow_view = ft.Column([
+        ft.Container(height=10),
+        ft.Row([create_box("Обем (24h)", "2.4B"), create_box("Open Interest", "+4.2%")], spacing=10),
+        ft.Row([create_box("CVD Delta", "-120M", "#ff4444"), create_box("Funding Rate", "0.01%")], spacing=10),
+        ft.Row([create_box("Ликвидации", "1.2M", "#ff4444"), create_box("Market Bias", "BULLISH", "#00ff99")], spacing=10),
+        ft.Container(
+            content=ft.Text("Orderbook Heatmap (Placeholder)", color="#555555"),
+            height=150, bgcolor="#080808", alignment=ft.alignment.center, border_radius=6
+        )
+    ], scroll=ft.ScrollMode.AUTO, padding=10, visible=False)
+
+    # 3. СЕКЦИЯ: AI (Подготовка за Етап 3)
+    ai_view = ft.Column([
+        ft.Container(
+            content=ft.Column([
+                ft.Text("AI Market Scanner", size=22, weight="bold"),
+                ft.Text("Анализиране на Order Blocks & FVG...", italic=True, color="gold"),
+                ft.Divider(color="#333333"),
+                ft.Text("• Market Structure: Bullish Break (BOS)", size=16),
+                ft.Text("• Liquidity Path: Target $2,850", size=16),
+                ft.Text("• Probability: 72% High", color="#00ff99", weight="bold")
+            ]),
+            padding=20, bgcolor="#111111", border_radius=12, margin=10
+        )
+    ], visible=False)
+
+    # 4. СЕКЦИЯ: JOURNAL
+    journal_view = ft.Text("Journal & Risk Management - Coming Soon", visible=False, size=20)
+
+    # ЛОГИКА ЗА НАВИГАЦИЯ
+    def navigate(e):
+        idx = e.control.selected_index
+        chart_view.visible = (idx == 0)
+        flow_view.visible = (idx == 1)
+        ai_view.visible = (idx == 2)
+        journal_view.visible = (idx == 3)
+        page.update()
+
+    page.navigation_bar = ft.NavigationBar(
+        destinations=[
+            ft.NavigationDestination(icon=ft.icons.SHOW_CHART, label="Chart"),
+            ft.NavigationDestination(icon=ft.icons.ANALYTICS, label="Flow"),
+            ft.NavigationDestination(icon=ft.icons.AUTO_AWESOME, label="AI"),
+            ft.NavigationDestination(icon=ft.icons.MENU_BOOK, label="Journal"),
+        ],
+        bgcolor="#000000",
+        on_change=navigate
     )
 
-    # Стартираме фоновата задача за обновяване на данните
-    asyncio.create_task(fetch_flow_data())
+    page.add(chart_view, flow_view, ai_view, journal_view)
 
 ft.app(target=main)
