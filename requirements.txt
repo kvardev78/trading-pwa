@@ -1,2 +1,3 @@
-flet
-httpx
+flet==0.21.0
+flet-fastapi
+uvicorn
