@@ -1,94 +1,73 @@
 import flet as ft
-import asyncio
+import pandas as pd
+import requests
 
-async def main(page: ft.Page):
-    # Настройки от твоя Manifest & CSS
-    page.title = "Trading App - ETH"
-    page.bgcolor = "#000000"
+# Основна логика на приложението
+def main(page: ft.Page):
+    page.title = "Trading Terminal - ETH Futures"
     page.theme_mode = ft.ThemeMode.DARK
-    page.padding = 0
-    page.spacing = 0
+    page.padding = 10
+    page.spacing = 20
+    
+    # Адаптация за мобилен екран
+    page.window_width = 400
+    page.window_height = 800
 
-    # 1. СЕКЦИЯ: CHART (TradingView)
-    chart_view = ft.Container(
-        content=ft.HtmlElement(
-            srcdoc="""
-            <div id="tv_chart" style="height:100vh;"></div>
-            <script src="https://s3.tradingview.com/tv.js"></script>
-            <script>
-                new TradingView.widget({
-                    "autosize": true, "symbol": "BYBIT:ETHUSDT.P", "interval": "15",
-                    "theme": "dark", "style": "1", "locale": "bg", "container_id": "tv_chart",
-                    "hide_side_toolbar": false, "allow_symbol_change": true, "details": true
-                });
-            </script>
-            """
-        ),
-        expand=True,
-        visible=True
-    )
+    # Заглавие
+    header = ft.Text("ETH/USDT - 5x Leverage", size=24, weight=ft.FontWeight.BOLD, color="blue")
 
-    # 2. СЕКЦИЯ: FLOW (Твоите Flow Boxes от Index.html)
-    def create_box(label, value="Броене...", color="#ffffff"):
-        return ft.Container(
-            content=ft.Column([
-                ft.Text(label, size=12, color="#aaaaaa"),
-                ft.Text(value, size=18, color=color, weight="bold")
-            ], spacing=2),
-            padding=12, bgcolor="#111111", border=ft.border.all(1, "#222222"),
-            border_radius=6, expand=1
-        )
+    # Секция за цена (Примерна интеграция)
+    price_text = ft.Text("Зареждане на цена...", size=30, color="green")
 
-    flow_view = ft.Column([
-        ft.Container(height=10),
-        ft.Row([create_box("Обем (24h)", "2.4B"), create_box("Open Interest", "+4.2%")], spacing=10),
-        ft.Row([create_box("CVD Delta", "-120M", "#ff4444"), create_box("Funding Rate", "0.01%")], spacing=10),
-        ft.Row([create_box("Ликвидации", "1.2M", "#ff4444"), create_box("Market Bias", "BULLISH", "#00ff99")], spacing=10),
-        ft.Container(
-            content=ft.Text("Orderbook Heatmap (Placeholder)", color="#555555"),
-            height=150, bgcolor="#080808", alignment=ft.alignment.center, border_radius=6
-        )
-    ], scroll=ft.ScrollMode.AUTO, padding=10, visible=False)
+    def get_eth_price():
+        try:
+            # Публично API на Binance за актуална цена
+            res = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT")
+            data = res.json()
+            return f"{float(data['price']):.2f} USDT"
+        except:
+            return "Грешка при връзка"
 
-    # 3. СЕКЦИЯ: AI (Подготовка за Етап 3)
-    ai_view = ft.Column([
-        ft.Container(
-            content=ft.Column([
-                ft.Text("AI Market Scanner", size=22, weight="bold"),
-                ft.Text("Анализиране на Order Blocks & FVG...", italic=True, color="gold"),
-                ft.Divider(color="#333333"),
-                ft.Text("• Market Structure: Bullish Break (BOS)", size=16),
-                ft.Text("• Liquidity Path: Target $2,850", size=16),
-                ft.Text("• Probability: 72% High", color="#00ff99", weight="bold")
-            ]),
-            padding=20, bgcolor="#111111", border_radius=12, margin=10
-        )
-    ], visible=False)
-
-    # 4. СЕКЦИЯ: JOURNAL
-    journal_view = ft.Text("Journal & Risk Management - Coming Soon", visible=False, size=20)
-
-    # ЛОГИКА ЗА НАВИГАЦИЯ
-    def navigate(e):
-        idx = e.control.selected_index
-        chart_view.visible = (idx == 0)
-        flow_view.visible = (idx == 1)
-        ai_view.visible = (idx == 2)
-        journal_view.visible = (idx == 3)
+    def refresh_price(e):
+        price_text.value = get_eth_price()
         page.update()
 
-    page.navigation_bar = ft.NavigationBar(
-        destinations=[
-            ft.NavigationDestination(icon=ft.icons.SHOW_CHART, label="Chart"),
-            ft.NavigationDestination(icon=ft.icons.ANALYTICS, label="Flow"),
-            ft.NavigationDestination(icon=ft.icons.AUTO_AWESOME, label="AI"),
-            ft.NavigationDestination(icon=ft.icons.MENU_BOOK, label="Journal"),
-        ],
-        bgcolor="#000000",
-        on_change=navigate
+    # Бутон за опресняване
+    refresh_btn = ft.ElevatedButton("Опресни цена", on_click=refresh_price)
+
+    # Контейнер за технически показатели (Placeholder за TradingView инструментите)
+    indicators = ft.Column([
+        ft.Text("Технически анализ:", size=18, weight="bold"),
+        ft.Row([ft.Text("EMA Ribbon:"), ft.Text("Neutral", color="orange")]),
+        ft.Row([ft.Text("RSI (14):"), ft.Text("55.4", color="green")]),
+        ft.Row([ft.Text("CVD:"), ft.Text("Increasing", color="green")]),
+    ])
+
+    # Добавяне на елементите в страницата
+    page.add(
+        header,
+        ft.Divider(),
+        ft.Column([
+            ft.Text("Текуща цена на ETH:"),
+            price_text,
+            refresh_btn
+        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER),
+        ft.Divider(),
+        indicators,
+        ft.Container(
+            content=ft.Text("TradingView Analysis (OI, SMC, ML) - Active", size=12),
+            padding=10,
+            bgcolor=ft.colors.SURFACE_VARIANT,
+            border_radius=10
+        )
     )
 
-    page.add(chart_view, flow_view, ai_view, journal_view)
+    # Първоначално зареждане на цената
+    price_text.value = get_eth_price()
+    page.update()
 
-import flet.fastapi as fastapi
-app = fastapi.app(main)
+# ВАЖНО: За Vercel премахваме директното стартиране тук.
+# Приложението се стартира от api/index.py.
+# Ако искаш да тестваш локално, ползвай: flet run app/main.py
+if __name__ == "__main__":
+    ft.app(target=main)
