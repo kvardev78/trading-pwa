@@ -90,4 +90,4 @@ async def main(page: ft.Page):
 
     page.add(chart_view, flow_view, ai_view, journal_view)
 
-ft.app(target=main, view=ft.AppView.WEB_BROWSER)
+app = ft.app(target=main, export_asgi=True)
