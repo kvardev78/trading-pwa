@@ -90,4 +90,5 @@ async def main(page: ft.Page):
 
     page.add(chart_view, flow_view, ai_view, journal_view)
 
-ft.app(target=main, view=ft.AppView.WEB_BROWSER)
+import flet.fastapi as fastapi
+app = fastapi.app(main)
