@@ -1,3 +1,0 @@
-flet
-flet-fastapi
-requests
