@@ -15,11 +15,11 @@ def main(page: ft.Page):
     
     def get_price():
         try:
-            # Използваме публичното API на Binance за актуална цена
+            # Използваме API-то на Binance за реално време
             r = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT")
             return f"{float(r.json()['price']):.2f} USDT"
         except Exception as e:
-            return f"Error: {e}"
+            return "Error"
 
     def update_price(e):
         price_text.value = get_price()
@@ -38,10 +38,8 @@ def main(page: ft.Page):
     price_text.value = get_price()
     page.update()
 
-# ТОВА Е МОСТЪТ КЪМ VERCEL
-# Тук казваме на FastAPI да управлява нашето Flet приложение
+# ТОВА Е КЛЮЧЪТ: Дефинираме 'app' за Vercel
 app = fastapi.app(main)
 
 if __name__ == "__main__":
-    # За локално тестване на компютъра ти
     ft.app(target=main)
