@@ -1,73 +1,41 @@
 import flet as ft
-import pandas as pd
 import requests
 
-# Основна логика на приложението
 def main(page: ft.Page):
-    page.title = "Trading Terminal - ETH Futures"
+    page.title = "Trading Terminal"
     page.theme_mode = ft.ThemeMode.DARK
-    page.padding = 10
-    page.spacing = 20
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
     
-    # Адаптация за мобилен екран
-    page.window_width = 400
-    page.window_height = 800
-
-    # Заглавие
-    header = ft.Text("ETH/USDT - 5x Leverage", size=24, weight=ft.FontWeight.BOLD, color="blue")
-
-    # Секция за цена (Примерна интеграция)
-    price_text = ft.Text("Зареждане на цена...", size=30, color="green")
-
-    def get_eth_price():
+    # Header
+    header = ft.Text("ETH/USDT 5x Leverage", size=25, weight="bold", color="blue")
+    
+    # Price Logic
+    price_text = ft.Text("Loading...", size=35, color="green")
+    
+    def get_price():
         try:
-            # Публично API на Binance за актуална цена
-            res = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT")
-            data = res.json()
-            return f"{float(data['price']):.2f} USDT"
+            r = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT")
+            return f"{float(r.json()['price']):.2f} USDT"
         except:
-            return "Грешка при връзка"
+            return "Error"
 
-    def refresh_price(e):
-        price_text.value = get_eth_price()
+    def update_price(e):
+        price_text.value = get_price()
         page.update()
 
-    # Бутон за опресняване
-    refresh_btn = ft.ElevatedButton("Опресни цена", on_click=refresh_price)
-
-    # Контейнер за технически показатели (Placeholder за TradingView инструментите)
-    indicators = ft.Column([
-        ft.Text("Технически анализ:", size=18, weight="bold"),
-        ft.Row([ft.Text("EMA Ribbon:"), ft.Text("Neutral", color="orange")]),
-        ft.Row([ft.Text("RSI (14):"), ft.Text("55.4", color="green")]),
-        ft.Row([ft.Text("CVD:"), ft.Text("Increasing", color="green")]),
-    ])
-
-    # Добавяне на елементите в страницата
+    btn = ft.ElevatedButton("Refresh Price", on_click=update_price)
+    
     page.add(
         header,
         ft.Divider(),
-        ft.Column([
-            ft.Text("Текуща цена на ETH:"),
-            price_text,
-            refresh_btn
-        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER),
-        ft.Divider(),
-        indicators,
-        ft.Container(
-            content=ft.Text("TradingView Analysis (OI, SMC, ML) - Active", size=12),
-            padding=10,
-            bgcolor=ft.colors.SURFACE_VARIANT,
-            border_radius=10
-        )
+        price_text,
+        btn,
+        ft.Text("TradingView: EMA, RSI, CVD Active", size=12, color="grey")
     )
-
-    # Първоначално зареждане на цената
-    price_text.value = get_eth_price()
+    
+    price_text.value = get_price()
     page.update()
 
-# ВАЖНО: За Vercel премахваме директното стартиране тук.
-# Приложението се стартира от api/index.py.
-# Ако искаш да тестваш локално, ползвай: flet run app/main.py
+# ТОВА Е ВАЖНО: За локално тестване
 if __name__ == "__main__":
     ft.app(target=main)
