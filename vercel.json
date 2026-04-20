@@ -1,14 +1,7 @@
 {
-  "builds": [
-    {
-      "src": "app/main.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "app/main.py"
-    }
-  ]
+  "rewriteConfigs": true,
+  "rewrites": [{ "source": "/(.*)", "destination": "app/main.py" }],
+  "functions": {
+    "app/main.py": { "runtime": "vercel-python@0.1.0" }
+  }
 }
