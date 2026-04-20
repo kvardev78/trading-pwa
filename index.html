@@ -1,1 +1,115 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Trading App</title>
 
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- TradingView Widget -->
+    <script src="https://s3.tradingview.com/tv.js"></script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header id="app-header">
+        <div class="header-title">Trading App</div>
+        <div class="header-actions">
+            <button id="settingsBtn" class="icon-btn">⚙️</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
+
+        <!-- CHART SECTION -->
+        <section id="tab-chart" class="tab-section active">
+            <div id="chart-container"></div>
+        </section>
+
+        <!-- FLOW SECTION -->
+        <section id="tab-flow" class="tab-section">
+            <h2>Поток на капитала</h2>
+
+            <div class="card">
+                <h3>Buy / Sell Pressure</h3>
+                <div id="flow-pressure">Зареждане...</div>
+            </div>
+
+            <div class="card">
+                <h3>Delta</h3>
+                <div id="flow-delta">Зареждане...</div>
+            </div>
+
+            <div class="card">
+                <h3>CVD</h3>
+                <div id="flow-cvd">Зареждане...</div>
+            </div>
+
+            <div class="card">
+                <h3>Ликвидации</h3>
+                <div id="flow-liquidations">Зареждане...</div>
+            </div>
+        </section>
+
+        <!-- DELTA SECTION -->
+        <section id="tab-delta" class="tab-section">
+            <h2>Делта анализ</h2>
+
+            <div class="card">
+                <h3>Обща Делта</h3>
+                <div id="delta-total">Зареждане...</div>
+            </div>
+
+            <div class="card">
+                <h3>Volume Imbalance</h3>
+                <div id="delta-imbalance">Зареждане...</div>
+            </div>
+        </section>
+
+        <!-- AI SECTION -->
+        <section id="tab-ai" class="tab-section">
+            <h2>AI Анализ</h2>
+
+            <div class="card ai-card">
+                <div id="ai-output">AI анализът се генерира...</div>
+            </div>
+
+            <button id="ai-refresh" class="primary-btn">Обнови анализа</button>
+        </section>
+
+        <!-- JOURNAL SECTION -->
+        <section id="tab-journal" class="tab-section">
+            <h2>Търговски дневник</h2>
+
+            <div class="card">
+                <textarea id="journal-input" placeholder="Запиши мисли, входове, грешки, идеи..."></textarea>
+            </div>
+
+            <button id="journal-save" class="primary-btn">Запази</button>
+
+            <div id="journal-entries"></div>
+        </section>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav id="bottom-nav">
+        <button class="nav-btn active" data-tab="chart">📈<span>Графика</span></button>
+        <button class="nav-btn" data-tab="flow">💧<span>Flow</span></button>
+        <button class="nav-btn" data-tab="delta">📊<span>Delta</span></button>
+        <button class="nav-btn" data-tab="ai">🤖<span>AI</span></button>
+        <button class="nav-btn" data-tab="journal">📝<span>Дневник</span></button>
+    </nav>
+
+    <!-- MAIN JS -->
+    <script src="main.js"></script>
+
+</body>
+</html>
