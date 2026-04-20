@@ -1,4 +1,3 @@
-flet
-flet-fastapi
-uvicorn
-requests
+flet==0.21.0
+flet-fastapi==0.21.0
+requests==2.31.0
