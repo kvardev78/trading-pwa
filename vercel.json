@@ -1,9 +1,10 @@
 {
-  "functions": {
-    "index.py": {
-      "runtime": "vercel-python@0.0.6"
+  "builds": [
+    {
+      "src": "index.py",
+      "use": "@vercel/python"
     }
-  },
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
