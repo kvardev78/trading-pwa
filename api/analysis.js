@@ -1,6 +1,5 @@
 export default async function handler(req, res) {
   try {
-    // Parse body safely
     let body = {};
     try {
       body = JSON.parse(req.body || "{}");
@@ -9,7 +8,7 @@ export default async function handler(req, res) {
     const prompt = body.prompt || "ETH анализ";
 
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + process.env.GEMINI_API_KEY,
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + process.env.GEMINI_API_KEY,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -27,7 +26,7 @@ export default async function handler(req, res) {
     );
 
     const data = await response.json();
-console.log("GEMINI RESPONSE:", data);
+    console.log("GEMINI RESPONSE:", data);
 
     const text =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
