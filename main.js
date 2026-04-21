@@ -24,6 +24,21 @@ new TradingView.widget({
   container_id: "tradingview_chart"
 });
 
+// LOAD JOURNAL FROM LOCALSTORAGE
+function loadJournal() {
+  const saved = JSON.parse(localStorage.getItem("journal") || "[]");
+  const list = document.getElementById("journal-list");
+
+  saved.forEach(entryHTML => {
+    const box = document.createElement("div");
+    box.className = "journal-entry";
+    box.innerHTML = entryHTML;
+    list.prepend(box);
+  });
+}
+
+loadJournal();
+
 // FLOW PLACEHOLDERS
 document.getElementById("cvd-value").textContent = "Очаква данни...";
 document.getElementById("delta-value").textContent = "Очаква данни...";
