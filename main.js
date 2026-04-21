@@ -1,4 +1,3 @@
-// Навигация между табовете
 const buttons = document.querySelectorAll(".bottom-nav button");
 const tabs = document.querySelectorAll(".tab");
 const headerTitle = document.getElementById("header-title");
@@ -14,7 +13,6 @@ buttons.forEach(btn => {
   });
 });
 
-// TradingView widget
 new TradingView.widget({
   autosize: true,
   symbol: "BINANCE:ETHUSDT",
