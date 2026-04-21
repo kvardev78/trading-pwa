@@ -48,5 +48,27 @@ main {
   background: none;
   border: none;
   color: #fff;
+}
+  
+  /* FLOW BOXES */
+.flow-box {
+  background: #111;
+  padding: 12px;
+  margin: 10px;
+  border-radius: 8px;
+  border: 1px solid #222;
+}
+
+.flow-box h3 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+}
+
+.flow-box p {
+  margin: 0;
+  font-size: 16px;
+  color: #aaa;
+}
+
   font-size: 22px;
 }
