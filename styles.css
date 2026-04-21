@@ -1,148 +1,71 @@
-/* GLOBAL */
+/* Основни цветове */
+:root {
+  --bg: #0f0f0f;
+  --bg-light: #1a1a1a;
+  --accent: #4da6ff;
+  --text: #e6e6e6;
+  --text-muted: #999;
+}
+
+/* Глобален стил */
 body {
-    margin: 0;
-    padding: 0;
-    background: #0d1117;
-    color: #e6edf3;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
-
-h2, h3 {
-    margin: 0 0 10px 0;
-    color: #00e5ff;
-}
-
-.card {
-    background: #161b22;
-    padding: 15px;
-    margin: 12px;
-    border-radius: 10px;
-    border: 1px solid #1f2937;
-    box-shadow: 0 0 10px rgba(0, 229, 255, 0.05);
-}
-
-.ai-card {
-    border-left: 3px solid #2962ff;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
 }
 
 /* HEADER */
-#app-header {
-    height: 50px;
-    background: #161b22;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px;
-    border-bottom: 1px solid #1f2937;
-}
-
-.header-title {
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.icon-btn {
-    background: none;
-    border: none;
-    color: #e6edf3;
-    font-size: 20px;
+.app-header {
+  background: var(--bg-light);
+  padding: 12px;
+  text-align: center;
+  font-size: 20px;
+  border-bottom: 1px solid #222;
 }
 
 /* MAIN CONTENT */
-#main-content {
-    padding-bottom: 70px;
+main {
+  padding: 10px;
+  padding-bottom: 70px;
 }
 
-.tab-section {
-    display: none;
-    padding: 10px;
+.tab {
+  display: none;
 }
 
-.tab-section.active {
-    display: block;
+.tab.active {
+  display: block;
 }
 
-/* BOTTOM NAV */
-#bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: #161b22;
-    border-top: 1px solid #1f2937;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+/* PLACEHOLDER */
+.placeholder {
+  color: var(--text-muted);
+  margin-top: 20px;
 }
 
-.nav-btn {
-    background: none;
-    border: none;
-    color: #8b949e;
-    font-size: 22px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* BOTTOM NAVIGATION */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-light);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid #222;
 }
 
-.nav-btn span {
-    font-size: 11px;
+.bottom-nav button {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 22px;
+  padding: 5px 10px;
+  transition: 0.2s;
 }
 
-.nav-btn.active {
-    color: #00e5ff;
-}
-
-/* BUTTONS */
-.primary-btn {
-    width: calc(100% - 24px);
-    margin: 12px;
-    padding: 12px;
-    background: linear-gradient(90deg, #2962ff, #00e5ff);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-/* JOURNAL */
-#journal-input {
-    width: 100%;
-    height: 120px;
-    background: #0d1117;
-    color: #e6edf3;
-    border: 1px solid #1f2937;
-    border-radius: 8px;
-    padding: 10px;
-}
-
-#journal-entries .entry {
-    background: #0d1117;
-    border-left: 3px solid #00e5ff;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 6px;
-}
-
-/* CHART LANDSCAPE MODE */
-@media screen and (orientation: landscape) {
-    #app-header,
-    #bottom-nav {
-        display: none;
-    }
-
-    #main-content {
-        padding: 0;
-    }
-
-    #tab-chart {
-        padding: 0;
-        margin: 0;
-    }
-
-    #chart-container {
-        height: 100vh !important;
-    }
+.bottom-nav button:hover {
+  color: var(--accent);
 }
