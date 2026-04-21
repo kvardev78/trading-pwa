@@ -50,30 +50,52 @@
      <h2>Търговски журнал</h2>
 
 <div class="journal-box">
-  <label>Дата</label>
-  <input id="jr-date" type="date">
+  <div class="jr-row">
+    <div>
+      <label>Дата</label>
+      <input id="jr-date" type="date">
+    </div>
 
-  <label>Час</label>
-  <input id="jr-time" type="time">
+    <div>
+      <label>Час</label>
+      <input id="jr-time" type="time">
+    </div>
+  </div>
 
-  <label>Посока</label>
-  <select id="jr-direction">
-    <option value="">--</option>
-    <option value="Long">Long</option>
-    <option value="Short">Short</option>
-  </select>
+  <div class="jr-row">
+    <div>
+      <label>Посока</label>
+      <select id="jr-direction">
+        <option value="">--</option>
+        <option value="Long">Long</option>
+        <option value="Short">Short</option>
+      </select>
+    </div>
 
-  <label>Входна цена</label>
-  <input id="jr-entry" type="number" step="0.01">
+    <div>
+      <label>Ливъридж</label>
+      <input id="jr-lev" type="number" step="1">
+    </div>
+  </div>
 
-  <label>Изходна цена</label>
-  <input id="jr-exit" type="number" step="0.01">
+  <div class="jr-row">
+    <div>
+      <label>Входна цена</label>
+      <input id="jr-entry" type="number" step="0.01">
+    </div>
 
-  <label>Размер на позицията (ETH)</label>
-  <input id="jr-size" type="number" step="0.001">
+    <div>
+      <label>Изходна цена</label>
+      <input id="jr-exit" type="number" step="0.01">
+    </div>
+  </div>
 
-  <label>Ливъридж</label>
-  <input id="jr-lev" type="number" step="1">
+  <div class="jr-row">
+    <div>
+      <label>Размер (ETH)</label>
+      <input id="jr-size" type="number" step="0.001">
+    </div>
+  </div>
 
   <label>Бележки</label>
   <textarea id="jr-notes" rows="3"></textarea>
