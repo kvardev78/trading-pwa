@@ -18,7 +18,7 @@ body {
 
 main {
   flex: 1;
-  height: calc(100dvh - 120px);
+  height: calc(100dvh - 80px);
   overflow: hidden;
 }
 
