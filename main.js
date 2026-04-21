@@ -16,12 +16,12 @@ buttons.forEach(btn => {
 
 // TradingView widget
 new TradingView.widget({
-  "autosize": true,
-  "symbol": "BINANCE:ETHUSDT",
-  "interval": "15",
-  "timezone": "Etc/UTC",
-  "theme": "dark",
-  "style": "1",
-  "locale": "bg",
+  autosize: true,
+  symbol: "BINANCE:ETHUSDT",
+  interval: "15",
+  timezone: "Etc/UTC",
+  theme: "dark",
+  style: "1",
+  locale: "bg",
   container_id: "tradingview_chart"
 });
