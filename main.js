@@ -60,27 +60,27 @@ document.getElementById("jr-save").addEventListener("click", () => {
     const box = document.createElement("div");
     box.className = "journal-entry";
 
-    box.innerHTML = `
-        <strong>${date} ${time}</strong>
+  box.innerHTML = `
+    <strong>${date} ${time}</strong>
 
-        <div class="jr-tags">
-            <div class="journal-tag ${dir === "Long" ? "long" : dir === "Short" ? "short" : ""}">
-                ${dir || "-"}
-            </div>
-            <div class="journal-tag lev">${lev ? lev + "x" : "-"}</div>
-            <div class="journal-tag size">${size ? size + " ETH" : "-"}</div>
+    <div class="jr-tags">
+        <div class="journal-tag ${dir === "Long" ? "long" : dir === "Short" ? "short" : ""}">
+            ${dir || "-"}
         </div>
+        <div class="journal-tag lev">${lev ? lev + "x" : "-"}</div>
+        <div class="journal-tag size">${size ? size + " ETH" : "-"}</div>
+    </div>
 
-        <div>Вход: <b>${entry || "-"}</b> | Изход: <b>${exit || "-"}</b></div>
+    <div>Вход: <b>${entry || "-"}</b> | Изход: <b>${exit || "-"}</b></div>
 
-        <div style="margin-top:6px; font-weight:bold; color:${pnl > 0 ? '#0f0' : pnl < 0 ? '#f33' : '#aaa'};">
-            PnL: ${pnl !== null ? pnl.toFixed(3) + " ETH" : "-"}
-        </div>
+    <div style="margin-top:6px; font-weight:bold; color:${pnl > 0 ? '#0f0' : pnl < 0 ? '#f33' : '#aaa'};">
+        PnL: ${pnl !== null ? pnl.toFixed(3) + " ETH" : "-"}
+    </div>
 
-        <div style="margin-top:6px;">
-            Бележки: ${notes || "-"}
-        </div>
-    `;
+    <div style="margin-top:6px;">
+        Бележки: ${notes || "-"}
+    </div>
+`;
 
     document.getElementById("journal-list").prepend(box);
 });
