@@ -77,7 +77,7 @@ main {
   border: 1px solid #222;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .journal-box label {
@@ -93,7 +93,7 @@ main {
   border-radius: 6px;
   padding: 8px;
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .journal-button {
@@ -103,7 +103,18 @@ main {
   color: #fff;
   border: 1px solid #444;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 17px;
+}
+
+.jr-row {
+  display: flex;
+  gap: 10px;
+}
+
+.jr-row > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 #journal-list {
@@ -115,15 +126,29 @@ main {
 
 .journal-entry {
   background: #111;
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
   border: 1px solid #222;
-  font-size: 14px;
-  color: #ccc;
+  font-size: 15px;
+  color: #ddd;
+  line-height: 1.4;
 }
 
+.journal-entry strong {
+  font-size: 16px;
+  color: #fff;
+}
+
+.journal-entry .jr-tags {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+}
+
+.journal-tag {
+  background: #222;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
   color: #aaa;
-}
-
-  font-size: 22px;
 }
