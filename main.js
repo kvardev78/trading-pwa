@@ -23,5 +23,5 @@ new TradingView.widget({
   "theme": "dark",
   "style": "1",
   "locale": "bg",
-  "container_id": "tradingview-widget"
+  container_id: "tradingview_chart"
 });
