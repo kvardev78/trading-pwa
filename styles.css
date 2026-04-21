@@ -1,58 +1,39 @@
-/* Основни цветове */
-:root {
-  --bg: #0f0f0f;
-  --bg-light: #1a1a1a;
-  --accent: #4da6ff;
-  --text: #e6e6e6;
-  --text-muted: #999;
-}
-
-/* Глобален стил */
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
+  background: #000;
+  color: #fff;
   font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* HEADER */
 .app-header {
-  background: var(--bg-light);
+  background: #111;
   padding: 12px;
   text-align: center;
   font-size: 20px;
   border-bottom: 1px solid #222;
 }
 
-/* MAIN CONTENT */
 main {
-  padding: 10px;
-  padding-bottom: 70px;
+  flex: 1;
+  overflow: auto;
 }
 
 .tab {
   display: none;
+  padding: 10px;
 }
 
 .tab.active {
   display: block;
 }
 
-/* PLACEHOLDER */
-.placeholder {
-  color: var(--text-muted);
-  margin-top: 20px;
-}
-
-/* BOTTOM NAVIGATION */
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--bg-light);
   display: flex;
   justify-content: space-around;
+  background: #111;
   padding: 10px 0;
   border-top: 1px solid #222;
 }
@@ -60,12 +41,6 @@ main {
 .bottom-nav button {
   background: none;
   border: none;
-  color: var(--text);
+  color: #fff;
   font-size: 22px;
-  padding: 5px 10px;
-  transition: 0.2s;
-}
-
-.bottom-nav button:hover {
-  color: var(--accent);
 }
