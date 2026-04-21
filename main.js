@@ -34,49 +34,53 @@ document.getElementById("liquidity-value").textContent = "Очаква данн�
 document.getElementById("generate-ai").addEventListener("click", () => {
   document.getElementById("ai-analysis").textContent = "Генерирам анализ...";
 
- // JOURNAL SAVE
+// JOURNAL SAVE
 document.getElementById("jr-save").addEventListener("click", () => {
-const now = new Date();
-const date = document.getElementById("jr-date").value || now.toISOString().slice(0, 10);
-const time = document.getElementById("jr-time").value || now.toTimeString().slice(0, 5);
-  const dir = document.getElementById("jr-direction").value;
-  const entry = document.getElementById("jr-entry").value;
-  const exit = document.getElementById("jr-exit").value;
-  const size = document.getElementById("jr-size").value;
-  const lev = document.getElementById("jr-lev").value;
-  const notes = document.getElementById("jr-notes").value;
-// PnL calculation
-let pnl = null;
-if (entry && exit && size) {
-  const e = parseFloat(entry);
-  const x = parseFloat(exit);
-  const s = parseFloat(size);
+    const now = new Date();
+    const date = document.getElementById("jr-date").value || now.toISOString().slice(0, 10);
+    const time = document.getElementById("jr-time").value || now.toTimeString().slice(0, 5);
+    const dir = document.getElementById("jr-direction").value;
+    const entry = document.getElementById("jr-entry").value;
+    const exit = document.getElementById("jr-exit").value;
+    const size = document.getElementById("jr-size").value;
+    const lev = document.getElementById("jr-lev").value;
+    const notes = document.getElementById("jr-notes").value;
 
-  if (dir === "Long") pnl = (x - e) * s;
-  if (dir === "Short") pnl = (e - x) * s;
-}
+    // PnL calculation
+    let pnl = null;
+    if (entry && exit && size) {
+        const e = parseFloat(entry);
+        const x = parseFloat(exit);
+        const s = parseFloat(size);
 
-  const box = document.createElement("div");
-  box.className = "journal-entry";
+        if (dir === "Long") pnl = (x - e) * s;
+        if (dir === "Short") pnl = (e - x) * s;
+    }
 
-  box.innerHTML = `
-    <strong>${date || "-"} ${time || ""}</strong>
+    const box = document.createElement("div");
+    box.className = "journal-entry";
 
-    <div class="jr-tags">
-      <div class="journal-tag">${dir || "-"}</div>
-      <div class="journal-tag">${lev ? lev + "x" : "-"}</div>
-      <div class="journal-tag">${size ? size + " ETH" : "-"}</div>
-    </div>
+    box.innerHTML = `
+        <strong>${date} ${time}</strong>
 
-    <div>Вход: <b>${entry || "-"}</b> | Изход: <b>${exit || "-"}</b></div>
-<div style="margin-top:6px; font-weight:bold; color:${pnl > 0 ? '#0f0' : pnl < 0 ? '#f33' : '#aaa'};">
-  PnL: ${pnl !== null ? pnl.toFixed(3) + " ETH" : "-"}
-</div>
+        <div class="jr-tags">
+            <div class="journal-tag ${dir === "Long" ? "long" : dir === "Short" ? "short" : ""}">
+                ${dir || "-"}
+            </div>
+            <div class="journal-tag lev">${lev ? lev + "x" : "-"}</div>
+            <div class="journal-tag size">${size ? size + " ETH" : "-"}</div>
+        </div>
 
-    <div style="margin-top:6px;">
-      Бележки: ${notes || "-"}
-    </div>
-  `;
+        <div>Вход: <b>${entry || "-"}</b> | Изход: <b>${exit || "-"}</b></div>
 
-  document.getElementById("journal-list").prepend(box);
+        <div style="margin-top:6px; font-weight:bold; color:${pnl > 0 ? '#0f0' : pnl < 0 ? '#f33' : '#aaa'};">
+            PnL: ${pnl !== null ? pnl.toFixed(3) + " ETH" : "-"}
+        </div>
+
+        <div style="margin-top:6px;">
+            Бележки: ${notes || "-"}
+        </div>
+    `;
+
+    document.getElementById("journal-list").prepend(box);
 });
