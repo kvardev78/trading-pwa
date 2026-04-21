@@ -36,8 +36,9 @@ document.getElementById("generate-ai").addEventListener("click", () => {
 
  // JOURNAL SAVE
 document.getElementById("jr-save").addEventListener("click", () => {
-  const date = document.getElementById("jr-date").value;
-  const time = document.getElementById("jr-time").value;
+const now = new Date();
+const date = document.getElementById("jr-date").value || now.toISOString().slice(0, 10);
+const time = document.getElementById("jr-time").value || now.toTimeString().slice(0, 5);
   const dir = document.getElementById("jr-direction").value;
   const entry = document.getElementById("jr-entry").value;
   const exit = document.getElementById("jr-exit").value;
