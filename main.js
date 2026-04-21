@@ -33,6 +33,7 @@ document.getElementById("liquidity-value").textContent = "Очаква данн�
 // AI ANALYSIS BUTTON
 document.getElementById("generate-ai").addEventListener("click", () => {
   document.getElementById("ai-analysis").textContent = "Генерирам анализ...";
+});
 
 // JOURNAL SAVE
 document.getElementById("jr-save").addEventListener("click", () => {
