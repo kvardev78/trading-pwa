@@ -104,10 +104,7 @@ document.getElementById("liquidity-value").textContent = "Очаква данн�
 // =========================
 // AI ANALYSIS BUTTON
 // =========================
-
-document.getElementById("generate-ai").addEventListener("click", () => {
-    document.getElementById("ai-analysis").textContent = "Генерирам анализ...";
-    
+  
 });
 document.getElementById("generate-ai").addEventListener("click", async () => {
     const prompt = "ETH анализ"; // по-късно ще го направим динамичен
