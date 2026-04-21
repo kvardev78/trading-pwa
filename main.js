@@ -69,6 +69,9 @@ if (entry && exit && size) {
     </div>
 
     <div>Вход: <b>${entry || "-"}</b> | Изход: <b>${exit || "-"}</b></div>
+<div style="margin-top:6px; font-weight:bold; color:${pnl > 0 ? '#0f0' : pnl < 0 ? '#f33' : '#aaa'};">
+  PnL: ${pnl !== null ? pnl.toFixed(3) + " ETH" : "-"}
+</div>
 
     <div style="margin-top:6px;">
       Бележки: ${notes || "-"}
