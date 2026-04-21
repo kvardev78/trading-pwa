@@ -107,6 +107,29 @@ document.getElementById("liquidity-value").textContent = "Очаква данн�
 
 document.getElementById("generate-ai").addEventListener("click", () => {
     document.getElementById("ai-analysis").textContent = "Генерирам анализ...";
+    
+});
+document.getElementById("generate-ai").addEventListener("click", async () => {
+    const prompt = "ETH анализ"; // по-късно ще го направим динамичен
+
+    document.getElementById("ai-analysis").textContent = "Генерирам анализ...";
+
+    try {
+        const response = await fetch("/api/analysis", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt })
+        });
+
+        const data = await response.json();
+
+        document.getElementById("ai-analysis").textContent =
+            data.analysis || "Няма резултат.";
+
+    } catch (err) {
+        document.getElementById("ai-analysis").textContent =
+            "Грешка при AI анализа.";
+    }
 });
 
 // =========================
