@@ -45,6 +45,16 @@ const time = document.getElementById("jr-time").value || now.toTimeString().slic
   const size = document.getElementById("jr-size").value;
   const lev = document.getElementById("jr-lev").value;
   const notes = document.getElementById("jr-notes").value;
+// PnL calculation
+let pnl = null;
+if (entry && exit && size) {
+  const e = parseFloat(entry);
+  const x = parseFloat(exit);
+  const s = parseFloat(size);
+
+  if (dir === "Long") pnl = (x - e) * s;
+  if (dir === "Short") pnl = (e - x) * s;
+}
 
   const box = document.createElement("div");
   box.className = "journal-entry";
