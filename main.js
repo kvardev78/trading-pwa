@@ -56,6 +56,32 @@ function loadJournal() {
 
 loadJournal();
 
+// AUTO-FILL LAST TRADE
+function loadLastTrade() {
+  const saved = JSON.parse(localStorage.getItem("journal") || "[]");
+  if (saved.length === 0) return;
+
+  const temp = document.createElement("div");
+  temp.innerHTML = saved[0];
+
+  const lastEntry = temp.querySelector(".journal-entry");
+  if (!lastEntry) return;
+
+  const dir = lastEntry.querySelector(".journal-tag").textContent.trim();
+  const lev = lastEntry.querySelector(".lev").textContent.replace("x", "").trim();
+  const size = lastEntry.querySelector(".size").textContent.replace("ETH", "").trim();
+
+  const entryText = lastEntry.querySelector("div:nth-child(3)").textContent;
+  const lastExit = entryText.split("Изход:")[1].trim();
+
+  document.getElementById("jr-direction").value = dir === "Long" ? "Short" : "Long";
+  document.getElementById("jr-lev").value = lev || "";
+  document.getElementById("jr-size").value = size || "";
+  document.getElementById("jr-entry").value = lastExit !== "-" ? lastExit : "";
+}
+
+loadLastTrade();
+
 // FLOW PLACEHOLDERS
 document.getElementById("cvd-value").textContent = "Очаква данни...";
 document.getElementById("delta-value").textContent = "Очаква данни...";
