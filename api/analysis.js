@@ -1,20 +1,23 @@
 export default async function handler(req, res) {
   try {
-    const body = await req.json();
+    // Parse body safely
+    let body = {};
+    try {
+      body = JSON.parse(req.body || "{}");
+    } catch {}
+
     const prompt = body.prompt || "ETH анализ";
 
     const response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + process.env.GEMINI_API_KEY,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [
             {
               parts: [
-                { text: "Ти си професионален крипто анализатор. Дай кратък и точен анализ." },
+                { text: "Ти си професионален крипто анализатор." },
                 { text: prompt }
               ]
             }
@@ -24,6 +27,7 @@ export default async function handler(req, res) {
     );
 
     const data = await response.json();
+
     const text =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "Няма резултат.";
@@ -31,6 +35,6 @@ export default async function handler(req, res) {
     res.status(200).json({ analysis: text });
 
   } catch (err) {
-    res.status(500).json({ error: "AI backend error" });
+    res.status(500).json({ error: "AI backend error", details: err.message });
   }
 }
