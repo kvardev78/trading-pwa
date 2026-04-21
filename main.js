@@ -89,9 +89,14 @@ document.getElementById("jr-save").addEventListener("click", () => {
 
         <div>Вход: <b>${entry || "-"}</b> | Изход: <b>${exit || "-"}</b></div>
 
-        <div style="margin-top:6px; font-weight:bold; color:${pnl > 0 ? '#0f0' : pnl < 0 ? '#f33' : '#aaa'};">
-            PnL: ${pnl !== null ? pnl.toFixed(3) + " ETH" : "-"}
-        </div>
+    <div style="
+    margin-top:6px;
+    font-weight:700;
+    font-size:16px;
+    color:${pnl > 0 ? '#00d26a' : pnl < 0 ? '#ff3b30' : '#9e9e9e'};
+">
+    PnL: ${pnl !== null ? pnl.toFixed(3) + " ETH" : "-"}
+</div>
 
         <div style="margin-top:6px;">
             Бележки: ${notes || "-"}
@@ -99,4 +104,9 @@ document.getElementById("jr-save").addEventListener("click", () => {
     `;
 
     document.getElementById("journal-list").prepend(box);
+  
+  // SAVE TO LOCALSTORAGE
+const saved = JSON.parse(localStorage.getItem("journal") || "[]");
+saved.unshift(box.innerHTML);
+localStorage.setItem("journal", JSON.stringify(saved));
 });
