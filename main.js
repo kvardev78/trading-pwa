@@ -13,6 +13,23 @@ buttons.forEach(btn => {
   });
 });
 
+// SAVE ACTIVE TAB
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    localStorage.setItem("activeTab", btn.dataset.tab);
+  });
+});
+
+// RESTORE ACTIVE TAB
+const savedTab = localStorage.getItem("activeTab");
+if (savedTab) {
+  tabs.forEach(t => t.classList.remove("active"));
+  document.getElementById(`tab-${savedTab}`).classList.add("active");
+
+  const activeBtn = document.querySelector(`button[data-tab="${savedTab}"]`);
+  if (activeBtn) headerTitle.textContent = activeBtn.textContent;
+}
+
 new TradingView.widget({
   autosize: true,
   symbol: "BINANCE:ETHUSDT",
