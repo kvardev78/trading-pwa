@@ -29,3 +29,13 @@ document.getElementById("cvd-value").textContent = "Очаква данни...";
 document.getElementById("delta-value").textContent = "Очаква данни...";
 document.getElementById("volume-flow-value").textContent = "Очаква данни...";
 document.getElementById("liquidity-value").textContent = "Очаква данни...";
+
+// AI ANALYSIS BUTTON
+document.getElementById("generate-ai").addEventListener("click", () => {
+  document.getElementById("ai-analysis").textContent = "Генерирам анализ...";
+
+  setTimeout(() => {
+    document.getElementById("ai-analysis").textContent =
+      "ETH е в консолидация. Очаква се пробив при силен обем. Следи ликвидните зони и реакцията около тях.";
+  }, 1200);
+});
