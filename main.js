@@ -23,3 +23,9 @@ new TradingView.widget({
   locale: "bg",
   container_id: "tradingview_chart"
 });
+
+// FLOW PLACEHOLDERS
+document.getElementById("cvd-value").textContent = "Очаква данни...";
+document.getElementById("delta-value").textContent = "Очаква данни...";
+document.getElementById("volume-flow-value").textContent = "Очаква данни...";
+document.getElementById("liquidity-value").textContent = "Очаква данни...";
