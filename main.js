@@ -34,7 +34,7 @@ document.getElementById("liquidity-value").textContent = "Очаква данн�
 document.getElementById("generate-ai").addEventListener("click", () => {
   document.getElementById("ai-analysis").textContent = "Генерирам анализ...";
 
-  // JOURNAL SAVE
+ // JOURNAL SAVE
 document.getElementById("jr-save").addEventListener("click", () => {
   const date = document.getElementById("jr-date").value;
   const time = document.getElementById("jr-time").value;
@@ -49,19 +49,20 @@ document.getElementById("jr-save").addEventListener("click", () => {
   box.className = "journal-entry";
 
   box.innerHTML = `
-    <strong>${date} ${time}</strong><br>
-    Посока: ${dir || "-"}<br>
-    Вход: ${entry || "-"} | Изход: ${exit || "-"}<br>
-    Размер: ${size || "-"} ETH | Ливъридж: ${lev || "-"}<br>
-    Бележки: ${notes || "-"}
+    <strong>${date || "-"} ${time || ""}</strong>
+
+    <div class="jr-tags">
+      <div class="journal-tag">${dir || "-"}</div>
+      <div class="journal-tag">${lev ? lev + "x" : "-"}</div>
+      <div class="journal-tag">${size ? size + " ETH" : "-"}</div>
+    </div>
+
+    <div>Вход: <b>${entry || "-"}</b> | Изход: <b>${exit || "-"}</b></div>
+
+    <div style="margin-top:6px;">
+      Бележки: ${notes || "-"}
+    </div>
   `;
 
   document.getElementById("journal-list").prepend(box);
-});
-
-
-  setTimeout(() => {
-    document.getElementById("ai-analysis").textContent =
-      "ETH е в консолидация. Очаква се пробив при силен обем. Следи ликвидните зони и реакцията около тях.";
-  }, 1200);
 });
