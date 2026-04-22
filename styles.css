@@ -571,3 +571,63 @@ button {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+
+/* ============================
+   AI PRO LAYOUT v3.0
+   ============================ */
+
+.ai-block {
+    background: #1e1e1e;
+    padding: 14px;
+    margin-bottom: 14px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.35);
+    border-left: 4px solid #4a8cff;
+}
+
+.ai-block-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #4a8cff;
+    margin-bottom: 8px;
+}
+
+.ai-block-body {
+    font-size: 15px;
+    line-height: 1.45;
+    color: #e0e0e0;
+}
+
+/* Финален вердикт — LONG */
+.ai-long {
+    color: #4caf50;
+    font-weight: 700;
+}
+
+/* Финален вердикт — SHORT */
+.ai-short {
+    color: #ff5252;
+    font-weight: 700;
+}
+
+/* Финален вердикт — WAIT */
+.ai-wait {
+    color: #ffca28;
+    font-weight: 700;
+}
+
+/* Loader spinner (ако искаш по-красив) */
+.spinner {
+    width: 26px;
+    height: 26px;
+    border: 3px solid #333;
+    border-top: 3px solid #4a8cff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
