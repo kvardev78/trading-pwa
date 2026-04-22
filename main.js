@@ -85,6 +85,7 @@ document.getElementById("generate-ai").addEventListener("click", async () => {
     const output = document.getElementById("ai-output");
     output.textContent = "Генерирам анализ...";
 
+    document.getElementById("ai-loader").style.display = "block";
     try {
         const analysis = await generateAIAnalysis({});
         renderAIAnalysis(analysis);
