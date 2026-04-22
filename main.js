@@ -1,3 +1,7 @@
+// =========================
+// JOURNAL MODULES
+// =========================
+
 import { saveJournalEntry, loadJournalEntries, deleteJournalEntry } from "./journal/journal.js";
 import { renderJournal } from "./journal/journal-render.js";
 import { renderStats } from "./journal/journal-stats-render.js";
@@ -5,15 +9,12 @@ import { calculateStats } from "./journal/journal-stats.js";
 import { renderEquityCurve } from "./journal/equity-curve.js";
 
 // =========================
-// IMPORT MODULES
+// IMPORT OTHER MODULES
 // =========================
 
 import { initChart } from "./chart/chart.js";
 import { loadIndicators } from "./chart/indicators.js";
 import { updateFlowPanel } from "./chart/flow.js";
-
-import { saveTrade, loadJournal, loadLastTrade } from "./journal/journal.js";
-import { calculateJournalStats } from "./journal/journal-stats.js";
 
 import { generateAIAnalysis } from "./ai/ai.js";
 import { renderAIAnalysis } from "./ai/ai-render.js";
@@ -69,10 +70,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Flow
     updateFlowPanel();
 
-    // Journal
-    loadJournal();
-    loadLastTrade();
-
     // Signals
     const signal = generateSignals({});
     renderSignals(signal);
@@ -80,6 +77,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Models
     const modelResult = runModels({});
     renderModelOutput(modelResult);
+
+    // Journal
+    refreshJournal();
 });
 
 
@@ -105,16 +105,6 @@ document.getElementById("generate-ai").addEventListener("click", async () => {
 // JOURNAL SAVE BUTTON
 // =========================
 
-document.getElementById("jr-save").addEventListener("click", saveTrade);
-
-/* ============================
-   JOURNAL ENGINE INIT
-============================ */
-
-import { saveJournalEntry, loadJournalEntries } from "./journal.js";
-import { renderJournal } from "./journal-render.js";
-
-// Записване на сделка
 document.getElementById("jr-save").addEventListener("click", () => {
     const entry = {
         date: document.getElementById("jr-date").value,
@@ -126,22 +116,14 @@ document.getElementById("jr-save").addEventListener("click", () => {
         exit: document.getElementById("jr-exit").value
     };
 
-    // Запис
     saveJournalEntry(entry);
-
-    // Презареждане на списъка
-    renderJournal(loadJournalEntries());
-
-    // Изчистване на формата
-    document.getElementById("jr-date").value = "";
-    document.getElementById("jr-size").value = "";
-    document.getElementById("jr-leverage").value = "";
-    document.getElementById("jr-entry").value = "";
-    document.getElementById("jr-exit").value = "";
+    refreshJournal();
 });
 
-// Зареждане при стартиране
-renderJournal(loadJournalEntries());
+
+// =========================
+// JOURNAL ENGINE REFRESH
+// =========================
 
 function refreshJournal() {
     const entries = loadJournalEntries();
