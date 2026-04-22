@@ -58,3 +58,143 @@
     color: #ff8888;
     font-weight: bold;
 }
+
+/* ============================================================
+   UI UPGRADE — TRADINGVIEW MODERN V2
+   (всичко оттук надолу е новият професионален интерфейс)
+============================================================ */
+
+/* =========================
+   GLOBAL
+========================= */
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #0b0b0d;
+    color: #e6e6e6;
+    font-family: "Inter", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+header {
+    background: #0f0f12;
+    padding: 18px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 1px solid #1c1c20;
+    letter-spacing: 0.5px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav {
+    display: flex;
+    background: #0f0f12;
+    border-bottom: 1px solid #1c1c20;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+nav button {
+    flex: 1;
+    padding: 14px 6px;
+    background: transparent;
+    color: #bfbfc4;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: 0.2s ease;
+}
+
+nav button:hover {
+    background: #1a1a1f;
+    color: #ffffff;
+}
+
+nav button.active {
+    background: #1f1f26;
+    color: #ffffff;
+    border-bottom: 2px solid #4c8dff;
+}
+
+/* =========================
+   PANELS
+========================= */
+
+.flow-panel,
+#ai-output,
+#signals-output,
+.journal-entry,
+.model-section {
+    background: #111116;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid #1d1d22;
+    margin-top: 18px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.25);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button.primary {
+    background: #4c8dff;
+    color: #fff;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: 0.2s ease;
+}
+
+button.primary:hover {
+    background: #3a78e0;
+}
+
+/* =========================
+   LONG / SHORT TAGS
+========================= */
+
+.journal-tag.long {
+    color: #4cff8d;
+    font-weight: 700;
+}
+
+.journal-tag.short {
+    color: #ff4c6a;
+    font-weight: 700;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+.tab {
+    display: none;
+    padding: 15px;
+    animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================
+   TRADINGVIEW CHART
+========================= */
+
+#tradingview_chart {
+    height: 480px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #1d1d22;
+}
