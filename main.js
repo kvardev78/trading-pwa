@@ -1,12 +1,11 @@
 // =========================
-// NAVIGATION TABS + SAVE ACTIVE TAB
+// NAVIGATION TABS
 // =========================
 
 const buttons = document.querySelectorAll("button[data-tab]");
 const tabs = document.querySelectorAll(".tab");
 const headerTitle = document.getElementById("header-title");
 
-// TAB CLICK
 buttons.forEach(btn => {
     btn.addEventListener("click", () => {
         const tab = btn.dataset.tab;
@@ -20,7 +19,6 @@ buttons.forEach(btn => {
     });
 });
 
-// RESTORE ACTIVE TAB
 const savedTab = localStorage.getItem("activeTab");
 if (savedTab) {
     tabs.forEach(t => t.classList.remove("active"));
@@ -46,7 +44,20 @@ new TradingView.widget({
 });
 
 // =========================
-// LOAD JOURNAL FROM LOCALSTORAGE
+// FLOW PLACEHOLDERS
+// =========================
+
+document.getElementById("cvd-value").textContent = "Очаква данни...";
+document.getElementById("delta-value").textContent = "Очаква данни...";
+document.getElementById("volume-flow-value").textContent = "Очаква данни...";
+document.getElementById("liquidity-value").textContent = "Очаква данни...";
+document.getElementById("funding-value").textContent = "Очаква данни...";
+document.getElementById("oi-value").textContent = "Очаква данни...";
+document.getElementById("liq-value").textContent = "Очаква данни...";
+document.getElementById("heatmap-value").textContent = "Очаква данни...";
+
+// =========================
+// JOURNAL LOAD
 // =========================
 
 function loadJournal() {
@@ -64,7 +75,7 @@ function loadJournal() {
 loadJournal();
 
 // =========================
-// AUTO-FILL LAST TRADE
+// JOURNAL AUTO-FILL
 // =========================
 
 function loadLastTrade() {
@@ -91,42 +102,6 @@ function loadLastTrade() {
 }
 
 loadLastTrade();
-
-// =========================
-// FLOW PLACEHOLDERS
-// =========================
-
-document.getElementById("cvd-value").textContent = "Очаква данни...";
-document.getElementById("delta-value").textContent = "Очаква данни...";
-document.getElementById("volume-flow-value").textContent = "Очаква данни...";
-document.getElementById("liquidity-value").textContent = "Очаква данни...";
-
-// =========================
-// AI ANALYSIS BUTTON
-// =========================
-
-document.getElementById("generate-ai").addEventListener("click", async () => {
-    const prompt = "ETH анализ";
-
-    document.getElementById("ai-analysis").textContent = "Генерирам анализ...";
-
-    try {
-        const response = await fetch("/api/analysis", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt })
-        });
-
-        const data = await response.json();
-
-        document.getElementById("ai-analysis").textContent =
-            data.analysis || "Няма резултат.";
-
-    } catch (err) {
-        document.getElementById("ai-analysis").textContent =
-            "Грешка при AI анализа.";
-    }
-});
 
 // =========================
 // JOURNAL SAVE
@@ -165,3 +140,33 @@ document.getElementById("jr-save").addEventListener("click", () => {
 
     loadLastTrade();
 });
+
+// =========================
+// AI ANALYSIS BUTTON
+// =========================
+
+document.getElementById("generate-ai").addEventListener("click", async () => {
+    document.getElementById("ai-output").textContent = "Генерирам анализ...";
+
+    try {
+        const response = await fetch("/api/analysis", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: "ETH анализ" })
+        });
+
+        const data = await response.json();
+        document.getElementById("ai-output").textContent =
+            data.analysis || "Няма резултат.";
+    } catch (err) {
+        document.getElementById("ai-output").textContent =
+            "Грешка при AI анализа.";
+    }
+});
+
+// =========================
+// SIGNALS PLACEHOLDER
+// =========================
+
+document.getElementById("signals-output").textContent =
+    "Сигналният модул ще бъде активен след интеграцията на signals.js.";
