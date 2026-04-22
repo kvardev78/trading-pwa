@@ -385,4 +385,27 @@ hr {
     letter-spacing: 0.2px;
 }
 
+/* =========================
+   UI UPGRADE v2.6 — HEADER
+========================= */
+
+.app-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(17, 17, 22, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    z-index: 999;
+}
+
+.header-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    color: #fff;
+}
 
