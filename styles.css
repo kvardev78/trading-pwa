@@ -458,3 +458,43 @@ hr {
     margin: 12px 0;
 }
 
+/* v2.8 — Final Polish */
+.card {
+    margin: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+
+.tab {
+    padding: 6px 0;
+}
+
+.flow-panel div,
+.ai-panel div,
+#signals-list div,
+#journal-list div,
+#models-output div,
+#alerts-list div {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: white;
+    width: 100%;
+}
