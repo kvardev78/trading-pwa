@@ -1,84 +1,88 @@
-// =========================
-// JOURNAL STATISTICS MODULE
-// Изчислява winrate, R:R, средни стойности
-// =========================
+// =======================================
+// JOURNAL STATISTICS ENGINE v1.0
+// =======================================
 
-// Парсване на сделка от HTML
-function parseTrade(entryHTML) {
-    const temp = document.createElement("div");
-    temp.innerHTML = entryHTML;
-
-    const entry = temp.querySelector(".journal-entry");
-    if (!entry) return null;
-
-    const dir = entry.querySelector(".journal-tag").textContent.trim();
-    const entryPrice = parseFloat(
-        entry.querySelector("div:nth-child(3)").textContent.split("Вход:")[1].split("|")[0]
-    );
-    const exitPrice = entry.querySelector("div:nth-child(3)").textContent.includes("Изход:")
-        ? parseFloat(entry.querySelector("div:nth-child(3)").textContent.split("Изход:")[1])
-        : null;
-
-    const size = parseFloat(entry.querySelector(".size").textContent.replace("ETH", ""));
-    const lev = parseFloat(entry.querySelector(".lev").textContent.replace("x", ""));
-
-    return {
-        dir,
-        entryPrice,
-        exitPrice,
-        size,
-        lev
-    };
-}
-
-// Изчисляване на статистики
-export function calculateJournalStats() {
-    const saved = JSON.parse(localStorage.getItem("journal") || "[]");
-    if (saved.length === 0) return null;
+export function calculateStats(entries) {
+    if (!entries.length) {
+        return {
+            totalTrades: 0,
+            winrate: 0,
+            avgRR: 0,
+            avgPnL: 0,
+            totalPnL: 0,
+            longCount: 0,
+            shortCount: 0,
+            biggestWin: 0,
+            biggestLoss: 0,
+            avgLeverage: 0,
+            equityCurve: []
+        };
+    }
 
     let wins = 0;
     let losses = 0;
-    let totalRR = 0;
-    let rrCount = 0;
-    let totalProfit = 0;
-    let totalLoss = 0;
+    let totalPnL = 0;
+    let rrSum = 0;
+    let pnlSum = 0;
+    let biggestWin = -999999;
+    let biggestLoss = 999999;
+    let longCount = 0;
+    let shortCount = 0;
+    let leverageSum = 0;
 
-    saved.forEach(entryHTML => {
-        const trade = parseTrade(entryHTML);
-        if (!trade || !trade.exitPrice) return;
+    const equityCurve = [];
+    let runningEquity = 0;
 
-        const { dir, entryPrice, exitPrice, size } = trade;
+    entries.forEach(e => {
+        const entry = parseFloat(e.entry);
+        const exit = parseFloat(e.exit);
+        const size = parseFloat(e.size);
+        const leverage = parseFloat(e.leverage);
 
+        // PnL
         let pnl = 0;
-
-        if (dir === "Long") {
-            pnl = (exitPrice - entryPrice) * size;
+        if (e.direction.toLowerCase() === "long") {
+            pnl = (exit - entry) * size * leverage;
+            longCount++;
         } else {
-            pnl = (entryPrice - exitPrice) * size;
+            pnl = (entry - exit) * size * leverage;
+            shortCount++;
         }
 
-        if (pnl > 0) {
-            wins++;
-            totalProfit += pnl;
-        } else {
-            losses++;
-            totalLoss += pnl;
-        }
+        totalPnL += pnl;
+        pnlSum += pnl;
 
-        // R:R (placeholder — ще го разширим)
-        const rr = pnl !== 0 ? pnl / (size * 0.01 * entryPrice) : 0;
-        totalRR += rr;
-        rrCount++;
+        // Win / Loss
+        if (pnl >= 0) wins++;
+        else losses++;
+
+        // Biggest win/loss
+        if (pnl > biggestWin) biggestWin = pnl;
+        if (pnl < biggestLoss) biggestLoss = pnl;
+
+        // R/R (ако имаме entry/exit)
+        const rr = Math.abs((exit - entry) / entry);
+        rrSum += rr;
+
+        // Leverage
+        leverageSum += leverage;
+
+        // Equity curve
+        runningEquity += pnl;
+        equityCurve.push(runningEquity);
     });
 
     return {
-        totalTrades: saved.length,
-        wins,
-        losses,
-        winrate: wins + losses > 0 ? (wins / (wins + losses)) * 100 : 0,
-        avgWin: wins > 0 ? totalProfit / wins : 0,
-        avgLoss: losses > 0 ? totalLoss / losses : 0,
-        avgRR: rrCount > 0 ? totalRR / rrCount : 0
+        totalTrades: entries.length,
+        winrate: (wins / entries.length) * 100,
+        avgRR: rrSum / entries.length,
+        avgPnL: pnlSum / entries.length,
+        totalPnL,
+        longCount,
+        shortCount,
+        biggestWin,
+        biggestLoss,
+        avgLeverage: leverageSum / entries.length,
+        equityCurve
     };
 }
-
