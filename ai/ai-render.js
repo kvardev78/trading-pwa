@@ -1,3 +1,5 @@
+import { formatAIStructure } from "./ai-structure.js";
+
 export function renderAIAnalysis(text) {
     const output = document.getElementById("ai-output");
 
