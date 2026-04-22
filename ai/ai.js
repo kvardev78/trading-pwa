@@ -3,6 +3,7 @@ document.getElementById("generate-ai").addEventListener("click", async () => {
 
     // Показваме loading
     output.textContent = "Генерирам анализ…";
+    document.getElementById("ai-loader").style.display = "block";
 
     try {
         const response = await fetch("/api/analyze", {
@@ -15,6 +16,9 @@ document.getElementById("generate-ai").addEventListener("click", async () => {
 
         const data = await response.json();
 
+        // СКРИВАМЕ loader-а след успешен отговор
+        document.getElementById("ai-loader").style.display = "none";
+
         if (!data || !data.result) {
             output.textContent = "Грешка: няма резултат от AI.";
             return;
@@ -26,10 +30,14 @@ document.getElementById("generate-ai").addEventListener("click", async () => {
             "Няма анализ.";
 
         // Показваме резултата
-     renderAIAnalysis(aiText);
+        renderAIAnalysis(aiText);
 
     } catch (err) {
         console.error(err);
+
+        // СКРИВАМЕ loader-а и при грешка
+        document.getElementById("ai-loader").style.display = "none";
+
         output.textContent = "Грешка при генериране на анализа.";
     }
 });
