@@ -142,3 +142,15 @@ document.getElementById("jr-save").addEventListener("click", () => {
 
 // Зареждане при стартиране
 renderJournal(loadJournalEntries());
+
+function refreshJournal() {
+    const entries = loadJournalEntries();
+
+    renderJournal(entries);
+    renderStats(entries);
+
+    const stats = calculateStats(entries);
+    renderEquityCurve(stats.equityCurve);
+}
+
+refreshJournal();
