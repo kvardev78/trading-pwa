@@ -56,10 +56,31 @@
     <div class="card">
         <div class="card-title">Журнал</div>
 
-        <div id="journal-form">
-            <button id="jr-open">Нова сделка</button>
+        <!-- FORM -->
+        <div id="journal-form" class="card" style="margin-bottom: 18px;">
+            <div class="card-title">Нова сделка</div>
+
+            <input id="jr-date" type="datetime-local" class="jr-input">
+
+            <select id="jr-pair" class="jr-input">
+                <option value="ETHUSDT">ETHUSDT</option>
+                <option value="BTCUSDT">BTCUSDT</option>
+            </select>
+
+            <select id="jr-direction" class="jr-input">
+                <option value="Long">Long</option>
+                <option value="Short">Short</option>
+            </select>
+
+            <input id="jr-size" type="number" step="0.01" placeholder="Размер (ETH)" class="jr-input">
+            <input id="jr-leverage" type="number" placeholder="Ливъридж" class="jr-input">
+            <input id="jr-entry" type="number" step="0.1" placeholder="Entry" class="jr-input">
+            <input id="jr-exit" type="number" step="0.1" placeholder="Exit" class="jr-input">
+
+            <button id="jr-save" class="primary">Запази сделката</button>
         </div>
 
+        <!-- LIST -->
         <div id="journal-list"></div>
     </div>
 </section>
