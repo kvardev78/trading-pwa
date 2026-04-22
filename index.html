@@ -69,8 +69,16 @@
     <div class="card">
         <div class="card-title">AI Анализ</div>
 
+        <!-- Бутон за генериране -->
         <button id="generate-ai">Генерирай анализ</button>
 
+        <!-- Loader (появява се докато AI работи) -->
+        <div id="ai-loader" style="display:none; text-align:center; margin-top:12px;">
+            <div class="spinner"></div>
+            <p style="color:#aaa; margin-top:6px; font-size:14px;">Генерирам анализ…</p>
+        </div>
+
+        <!-- AI Output (тук влиза анализът) -->
         <div id="ai-output"></div>
     </div>
 </section>
