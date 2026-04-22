@@ -26,10 +26,12 @@ document.getElementById("generate-ai").addEventListener("click", async () => {
             "Няма анализ.";
 
         // Показваме резултата
-        output.textContent = aiText;
+     renderAIAnalysis(aiText);
 
     } catch (err) {
         console.error(err);
         output.textContent = "Грешка при генериране на анализа.";
     }
 });
+
+import { renderAIAnalysis } from "./ai-render.js";
