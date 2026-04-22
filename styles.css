@@ -237,3 +237,62 @@ button.primary:hover {
 .bottom-nav button:hover {
     color: #ffffff;
 }
+
+/* =========================
+   UI UPGRADE v2.2 — MOBILE POLISH
+========================= */
+
+/* По-големи вътрешни отстояния за табовете */
+.tab {
+    padding: 20px 14px;
+}
+
+/* По-ясни заглавия вътре в панелите */
+.tab h2, 
+.tab h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* По-добър spacing между елементите */
+.tab p,
+.tab div,
+.tab section {
+    margin-bottom: 14px;
+}
+
+/* По-четими списъци */
+.tab ul {
+    margin: 10px 0 10px 18px;
+}
+
+.tab li {
+    margin-bottom: 6px;
+}
+
+/* По-приятни разделители */
+hr {
+    border: none;
+    border-top: 1px solid #1d1d22;
+    margin: 18px 0;
+}
+
+/* По-стабилни панели */
+.flow-panel,
+#ai-output,
+#signals-output,
+.journal-entry,
+.model-section {
+    margin-bottom: 22px;
+    padding: 18px;
+}
+
+/* По-големи бутони */
+button.primary {
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
