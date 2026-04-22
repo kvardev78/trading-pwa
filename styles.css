@@ -296,3 +296,93 @@ button.primary {
     border-radius: 10px;
 }
 
+/* =========================
+   UI UPGRADE v2.3 — GLASS & DEPTH
+========================= */
+
+/* Стъклени панели */
+.flow-panel,
+#ai-output,
+#signals-output,
+.journal-entry,
+.model-section {
+    background: rgba(17, 17, 22, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 22px rgba(0,0,0,0.35);
+}
+
+/* По-дълбоки сенки за важни елементи */
+button.primary {
+    box-shadow: 0 4px 14px rgba(76, 141, 255, 0.35);
+}
+
+button.primary:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(76, 141, 255, 0.25);
+}
+
+/* По-ясни табове */
+nav button.active {
+    background: rgba(31, 31, 38, 0.75);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid #4c8dff;
+}
+
+/* По-модерни разделители */
+hr {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Леко повдигане на активния таб */
+.tab.active {
+    animation: tabPop 0.25s ease;
+}
+
+@keyframes tabPop {
+    from { opacity: 0; transform: translateY(6px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* =========================
+   UI UPGRADE v2.4 — ICON NAVIGATION
+========================= */
+
+/* Подравняване на иконките и текста */
+.bottom-nav button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding-top: 6px;
+}
+
+/* Размер на иконките */
+.bottom-nav button img {
+    width: 22px;
+    height: 22px;
+    opacity: 0.85;
+    transition: 0.2s ease;
+}
+
+/* Активен таб — по-ярка иконка */
+.bottom-nav button.active img {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(76, 141, 255, 0.45));
+}
+
+/* Hover ефект */
+.bottom-nav button:hover img {
+    opacity: 1;
+}
+
+/* Текст под иконката */
+.bottom-nav button span {
+    font-size: 11px;
+    margin-top: -2px;
+    letter-spacing: 0.2px;
+}
+
+
