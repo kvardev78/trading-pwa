@@ -1,7 +1,3 @@
-// ===============================
-// JOURNAL RENDER ENGINE
-// ===============================
-
 import { deleteJournalEntry } from "./journal.js";
 
 export function renderJournal(entries) {
@@ -40,7 +36,6 @@ export function renderJournal(entries) {
         container.appendChild(card);
     });
 
-    // Delete buttons
     document.querySelectorAll("[data-del]").forEach(btn => {
         btn.addEventListener("click", () => {
             deleteJournalEntry(btn.dataset.del);
@@ -48,4 +43,3 @@ export function renderJournal(entries) {
         });
     });
 }
-
