@@ -57,5 +57,8 @@ export function renderAIAnalysis(text) {
         }
     }
 
-    output.innerHTML = html;
+output.innerHTML = html;
+
+// Автоматично скролване към резултата
+output.scrollIntoView({ behavior: "smooth" });
 }
