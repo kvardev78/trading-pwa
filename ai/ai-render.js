@@ -24,10 +24,20 @@ export function renderAIAnalysis(text) {
         else if (/^[-•]/.test(line)) {
             html += `<div style="margin-left:12px; margin-bottom:4px;">${line}</div>`;
         }
-        // Нормален текст
-        else {
-            html += `<p style="margin-bottom:6px;">${line}</p>`;
-        }
+    // Финален вердикт
+else if (line.toLowerCase().includes("long")) {
+    html += `<p style="margin-bottom:6px; font-weight:700; color:#4caf50;">${line}</p>`;
+}
+else if (line.toLowerCase().includes("short")) {
+    html += `<p style="margin-bottom:6px; font-weight:700; color:#ff5252;">${line}</p>`;
+}
+else if (line.toLowerCase().includes("wait") || line.toLowerCase().includes("hold")) {
+    html += `<p style="margin-bottom:6px; font-weight:700; color:#ffca28;">${line}</p>`;
+}
+// Нормален текст
+else {
+    html += `<p style="margin-bottom:6px;">${line}</p>`;
+}
     }
 
     output.innerHTML = html;
