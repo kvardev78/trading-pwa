@@ -36,6 +36,9 @@
 
     <!-- TAB: FLOW -->
     <section id="tab-flow" class="tab">
+<div class="card">
+    <div class="card-title">Потоци</div>
+
         <div class="flow-panel">
             <div>CVD: <span id="cvd-value"></span></div>
             <div>Delta: <span id="delta-value"></span></div>
@@ -48,45 +51,57 @@
         </div>
     </section>
 
-    <!-- TAB: JOURNAL -->
-    <section id="tab-journal" class="tab">
-        <div class="journal-form">
-            <input id="jr-date" type="date" />
-            <input id="jr-time" type="time" />
-            <select id="jr-direction">
-                <option>Long</option>
-                <option>Short</option>
-            </select>
-            <input id="jr-entry" placeholder="Вход" />
-            <input id="jr-exit" placeholder="Изход" />
-            <input id="jr-size" placeholder="Размер (ETH)" />
-            <input id="jr-lev" placeholder="Ливъридж" />
-            <textarea id="jr-notes" placeholder="Бележки"></textarea>
-            <button id="jr-save">Запази</button>
+<!-- TAB: JOURNAL -->
+<section id="tab-journal" class="tab">
+    <div class="card">
+        <div class="card-title">Журнал</div>
+
+        <div id="journal-form">
+            <button id="jr-open">Нова сделка</button>
         </div>
 
         <div id="journal-list"></div>
-    </section>
+    </div>
+</section>
 
-    <!-- TAB: AI -->
-    <section id="tab-ai" class="tab">
+<!-- TAB: AI -->
+<section id="tab-ai" class="tab">
+    <div class="card">
+        <div class="card-title">AI Анализ</div>
+
         <button id="generate-ai">Генерирай анализ</button>
+
         <div id="ai-output"></div>
-    </section>
+    </div>
+</section>
 
     <!-- TAB: SIGNALS -->
-    <section id="tab-signals" class="tab">
-        <div id="signals-output">Няма активни сигнали.</div>
-    </section>
-    <!-- TAB: MODELS -->
-    <section id="tab-models" class="tab">
-        <div id="models-output">Моделите се зареждат...</div>
-    </section>
+<section id="tab-signals" class="tab">
+    <div class="card">
+        <div class="card-title">Сигнали</div>
 
-    <!-- TAB: ALERTS -->
-    <section id="tab-alerts" class="tab">
-        <div id="alerts-output">Няма активни аларми.</div>
-    </section>
+        <div id="signals-list"></div>
+    </div>
+</section>
+
+<!-- TAB: MODELS -->
+<section id="tab-models" class="tab">
+    <div class="card">
+        <div class="card-title">Модели</div>
+
+        <div id="models-output"></div>
+    </div>
+</section>
+    
+ <!-- TAB: ALERTS -->
+<section id="tab-alerts" class="tab">
+    <div class="card">
+        <div class="card-title">Аларми</div>
+
+        <div id="alerts-list"></div>
+        <button id="add-alert">Добави аларма</button>
+    </div>
+</section>
 </main>
 
 <!-- ДОЛНО МЕНЮ -->
