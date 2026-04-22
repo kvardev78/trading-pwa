@@ -196,8 +196,10 @@ button.primary:hover {
     height: 480px;
     border-radius: 10px;
     overflow: hidden;
+    border: 1px solid #1d1d22;
+}
 
-   /* =========================
+/* =========================
    BOTTOM NAVIGATION
 ========================= */
 
@@ -234,7 +236,4 @@ button.primary:hover {
 
 .bottom-nav button:hover {
     color: #ffffff;
-}
-
-    border: 1px solid #1d1d22;
 }
