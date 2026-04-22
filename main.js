@@ -100,3 +100,39 @@ document.getElementById("generate-ai").addEventListener("click", async () => {
 // =========================
 
 document.getElementById("jr-save").addEventListener("click", saveTrade);
+
+/* ============================
+   JOURNAL ENGINE INIT
+============================ */
+
+import { saveJournalEntry, loadJournalEntries } from "./journal.js";
+import { renderJournal } from "./journal-render.js";
+
+// Записване на сделка
+document.getElementById("jr-save").addEventListener("click", () => {
+    const entry = {
+        date: document.getElementById("jr-date").value,
+        pair: document.getElementById("jr-pair").value,
+        direction: document.getElementById("jr-direction").value,
+        size: document.getElementById("jr-size").value,
+        leverage: document.getElementById("jr-leverage").value,
+        entry: document.getElementById("jr-entry").value,
+        exit: document.getElementById("jr-exit").value
+    };
+
+    // Запис
+    saveJournalEntry(entry);
+
+    // Презареждане на списъка
+    renderJournal(loadJournalEntries());
+
+    // Изчистване на формата
+    document.getElementById("jr-date").value = "";
+    document.getElementById("jr-size").value = "";
+    document.getElementById("jr-leverage").value = "";
+    document.getElementById("jr-entry").value = "";
+    document.getElementById("jr-exit").value = "";
+});
+
+// Зареждане при стартиране
+renderJournal(loadJournalEntries());
