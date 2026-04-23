@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="manifest" href="/manifest.json">
 
+    <meta name="theme-color" content="#000000">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
     <script src="https://s3.tradingview.com/tv.js"></script>
 </head>
 
@@ -36,134 +40,101 @@
 
     <!-- TAB: FLOW -->
     <section id="tab-flow" class="tab">
-<div class="card">
-    <div class="card-title">Потоци</div>
+        <div class="card">
+            <div class="card-title">Потоци</div>
 
-        <div class="flow-panel">
-            <div>CVD: <span id="cvd-value"></span></div>
-            <div>Delta: <span id="delta-value"></span></div>
-            <div>Volume Flow: <span id="volume-flow-value"></span></div>
-            <div>Liquidity: <span id="liquidity-value"></span></div>
-            <div>Funding: <span id="funding-value"></span></div>
-            <div>Open Interest: <span id="oi-value"></span></div>
-            <div>Liquidations: <span id="liq-value"></span></div>
-            <div>Orderbook Heatmap: <span id="heatmap-value"></span></div>
+            <div class="flow-panel">
+                <div>CVD: <span id="cvd-value"></span></div>
+                <div>Delta: <span id="delta-value"></span></div>
+                <div>Volume Flow: <span id="volume-flow-value"></span></div>
+                <div>Liquidity: <span id="liquidity-value"></span></div>
+                <div>Funding: <span id="funding-value"></span></div>
+                <div>Open Interest: <span id="oi-value"></span></div>
+                <div>Liquidations: <span id="liq-value"></span></div>
+                <div>Orderbook Heatmap: <span id="heatmap-value"></span></div>
+            </div>
         </div>
     </section>
 
-<!-- TAB: JOURNAL -->
-<section id="tab-journal" class="tab">
-    <div class="card">
-        <div class="card-title">Журнал</div>
+    <!-- TAB: JOURNAL -->
+    <section id="tab-journal" class="tab">
+        <div class="card">
+            <div class="card-title">Журнал</div>
 
-        <!-- JOURNAL FORM -->
-        <div id="journal-form" class="card" style="margin-bottom: 18px;">
-            <div class="card-title">Нова сделка</div>
+            <!-- JOURNAL FORM -->
+            <div id="journal-form" class="card" style="margin-bottom: 18px;">
+                <div class="card-title">Нова сделка</div>
 
-            <input id="jr-date" type="datetime-local" class="jr-input">
+                <input id="jr-date" type="datetime-local" class="jr-input">
 
-            <select id="jr-pair" class="jr-input">
-                <option value="ETHUSDT">ETHUSDT</option>
-                <option value="BTCUSDT">BTCUSDT</option>
-            </select>
+                <select id="jr-pair" class="jr-input">
+                    <option value="ETHUSDT">ETHUSDT</option>
+                    <option value="BTCUSDT">BTCUSDT</option>
+                </select>
 
-            <select id="jr-direction" class="jr-input">
-                <option value="Long">Long</option>
-                <option value="Short">Short</option>
-            </select>
+                <select id="jr-direction" class="jr-input">
+                    <option value="Long">Long</option>
+                    <option value="Short">Short</option>
+                </select>
 
-            <input id="jr-size" type="number" step="0.01" placeholder="Размер (ETH)" class="jr-input">
-            <input id="jr-leverage" type="number" placeholder="Ливъридж" class="jr-input">
-            <input id="jr-entry" type="number" step="0.1" placeholder="Entry" class="jr-input">
-            <input id="jr-exit" type="number" step="0.1" placeholder="Exit" class="jr-input">
+                <input id="jr-size" type="number" step="0.01" placeholder="Размер (ETH)" class="jr-input">
+                <input id="jr-leverage" type="number" placeholder="Ливъридж" class="jr-input">
+                <input id="jr-entry" type="number" step="0.1" placeholder="Entry" class="jr-input">
+                <input id="jr-exit" type="number" step="0.1" placeholder="Exit" class="jr-input">
 
-            <button id="jr-save" class="primary">Запази сделката</button>
+                <button id="jr-save" class="primary">Запази сделката</button>
+            </div>
+
+            <!-- JOURNAL LIST -->
+            <div id="journal-list"></div>
+
+            <!-- JOURNAL STATS -->
+            <div id="journal-stats" style="margin-top: 18px;"></div>
+            <canvas id="equity-curve" height="180" style="margin-top: 18px; width: 100%;"></canvas>
         </div>
+    </section>
 
-        <!-- JOURNAL LIST -->
-        <div id="journal-list"></div>
+    <!-- TAB: AI -->
+    <section id="tab-ai" class="tab">
+        <div class="card">
+            <div class="card-title">AI Анализ</div>
 
-        <!-- JOURNAL STATS -->
-        <div id="journal-stats" style="margin-top: 18px;"></div>
-<canvas id="equity-curve" height="180" style="margin-top: 18px; width: 100%;"></canvas>
-    </div>
-</section>
+            <button id="generate-ai">Генерирай анализ</button>
 
-        <!-- FORM -->
-        <div id="journal-form" class="card" style="margin-bottom: 18px;">
-            <div class="card-title">Нова сделка</div>
+            <div id="ai-loader" style="display:none; text-align:center; margin-top:12px;">
+                <div class="spinner"></div>
+                <p style="color:#aaa; margin-top:6px; font-size:14px;">Генерирам анализ…</p>
+            </div>
 
-            <input id="jr-date" type="datetime-local" class="jr-input">
-
-            <select id="jr-pair" class="jr-input">
-                <option value="ETHUSDT">ETHUSDT</option>
-                <option value="BTCUSDT">BTCUSDT</option>
-            </select>
-
-            <select id="jr-direction" class="jr-input">
-                <option value="Long">Long</option>
-                <option value="Short">Short</option>
-            </select>
-
-            <input id="jr-size" type="number" step="0.01" placeholder="Размер (ETH)" class="jr-input">
-            <input id="jr-leverage" type="number" placeholder="Ливъридж" class="jr-input">
-            <input id="jr-entry" type="number" step="0.1" placeholder="Entry" class="jr-input">
-            <input id="jr-exit" type="number" step="0.1" placeholder="Exit" class="jr-input">
-
-            <button id="jr-save" class="primary">Запази сделката</button>
+            <div id="ai-output"></div>
         </div>
-
-        <!-- LIST -->
-        <div id="journal-list"></div>
-    </div>
-</section>
-
-<!-- TAB: AI -->
-<section id="tab-ai" class="tab">
-    <div class="card">
-        <div class="card-title">AI Анализ</div>
-
-        <!-- Бутон за генериране -->
-        <button id="generate-ai">Генерирай анализ</button>
-
-        <!-- Loader (появява се докато AI работи) -->
-        <div id="ai-loader" style="display:none; text-align:center; margin-top:12px;">
-            <div class="spinner"></div>
-            <p style="color:#aaa; margin-top:6px; font-size:14px;">Генерирам анализ…</p>
-        </div>
-
-        <!-- AI Output (тук влиза анализът) -->
-        <div id="ai-output"></div>
-    </div>
-</section>
+    </section>
 
     <!-- TAB: SIGNALS -->
-<section id="tab-signals" class="tab">
-    <div class="card">
-        <div class="card-title">Сигнали</div>
+    <section id="tab-signals" class="tab">
+        <div class="card">
+            <div class="card-title">Сигнали</div>
+            <div id="signals-list"></div>
+        </div>
+    </section>
 
-        <div id="signals-list"></div>
-    </div>
-</section>
+    <!-- TAB: MODELS -->
+    <section id="tab-models" class="tab">
+        <div class="card">
+            <div class="card-title">Модели</div>
+            <div id="models-output"></div>
+        </div>
+    </section>
 
-<!-- TAB: MODELS -->
-<section id="tab-models" class="tab">
-    <div class="card">
-        <div class="card-title">Модели</div>
+    <!-- TAB: ALERTS -->
+    <section id="tab-alerts" class="tab">
+        <div class="card">
+            <div class="card-title">Аларми</div>
+            <div id="alerts-list"></div>
+            <button id="add-alert">Добави аларма</button>
+        </div>
+    </section>
 
-        <div id="models-output"></div>
-    </div>
-</section>
-    
- <!-- TAB: ALERTS -->
-<section id="tab-alerts" class="tab">
-    <div class="card">
-        <div class="card-title">Аларми</div>
-
-        <div id="alerts-list"></div>
-        <button id="add-alert">Добави аларма</button>
-    </div>
-</section>
 </main>
 
 <!-- ДОЛНО МЕНЮ -->
@@ -174,8 +145,14 @@
     <button data-tab="ai">AI</button>
     <button data-tab="signals">Сигнали</button>
 </div>
-    
+
 <script src="main.js"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js');
+}
+</script>
+
 </body>
 </html>
-
